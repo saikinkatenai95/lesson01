@@ -1,0 +1,2353 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>ともすた</title>
+	<atom:link href="https://tomosta.jp/feed/" rel="self" type="application/rss+xml" />
+	<link>https://tomosta.jp</link>
+	<description>学び。応援コミュニティ</description>
+	<lastBuildDate>Wed, 22 Dec 2021 02:15:57 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	
+
+<image>
+	<url>https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/manabee_512.png?fit=32%2C32&#038;ssl=1</url>
+	<title>ともすた</title>
+	<link>https://tomosta.jp</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+<site xmlns="com-wordpress:feed-additions:1">200908896</site>	<item>
+		<title>JavaScriptのwhile構文で万年カレンダーを作ろう</title>
+		<link>https://tomosta.jp/article/js-while-calendar/</link>
+		
+		<dc:creator><![CDATA[たにぐち　まこと]]></dc:creator>
+		<pubDate>Wed, 01 Dec 2021 03:12:34 +0000</pubDate>
+				<category><![CDATA[入門記事]]></category>
+		<guid isPermaLink="false">https://tomosta.jp/?p=2416</guid>
+
+					<description><![CDATA[JavaScriptで同じような処理を繰り返したいときに使えるwhile構文を使って、万年カレンダーを作ってみましょう。]]></description>
+										<content:encoded><![CDATA[
+<p>JavaScriptを初めとしたプログラミング言語では、同じような作業を何度も繰り返す処理が非常に得意です。ここでは、JavaScriptの「while」という構文を使って万年カレンダーを作ってみましょう。</p>
+
+
+
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+<div class="c-responsive-container-16-9"><iframe loading="lazy" title="【JS】while構文で万年カレンダーを作ろう" width="1220" height="686" src="https://www.youtube.com/embed/VFNMJL5HaFk?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+</div></figure>
+
+
+
+<h2>HTMLを準備しよう</h2>
+
+
+
+<p>まずはHTMLを準備します。Visual Studio CodeとEmmetなどを使うと楽でしょう。次のようなHTMLを準備します。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;万年カレンダー&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+
+
+<p>この、<code>&lt;body&gt;</code>タグの中にJavaScriptを記述していきます。</p>
+
+
+
+<h2>for構文とwhile構文</h2>
+
+
+
+<p>繰り返し構文には、大きく分けてfor構文とwhile構文があります。これは、書き方が違うだけで同じ事ができます。まずは、for構文を使ってみましょう。次のようなプログラムを作成してみます。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;script&gt;
+for (let i=0; i&lt;10; i++) {
+  document.write(i + '&lt;br&gt;');
+}
+&lt;/script&gt;</code></pre>
+
+
+
+<p>これで作成したHTMLファイルをブラウザーに表示すると、次のように数字が羅列されます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="2418" data-permalink="https://tomosta.jp/article/js-while-calendar/attachment/image-92/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-2418" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>真ん中の数字を大きくすれば、何度も繰り返して表示させることができます。</p>
+
+
+
+<pre class="wp-block-code"><code><meta charset="utf-8">for (let i=0; i&lt;10000; i++) {</code></pre>
+
+
+
+<h3>for構文の書式</h3>
+
+
+
+<p>for構文は、次のような書式になっています。</p>
+
+
+
+<pre class="wp-block-code"><code>for (初期化; 繰り返し条件; 更新処理) {
+  繰り返す処理
+}</code></pre>
+
+
+
+<p>かなり特殊な構文ですが、3つの要素を1つのカッコの中に記述してしまっています。先のプログラムの場合、次のような要素を指定しています。</p>
+
+
+
+<figure class="wp-block-flexible-table-block-table is-style-stripes"><table class=""><tbody><tr><th>初期化</th><td>let i=0</td><td>変数iに0を代入する</td></tr><tr><th>繰り返し条件</th><td>i&lt;10</td><td>iが10未満の間</td></tr><tr><th>更新処理</th><td>i++</td><td>iに1を加える</td></tr><tr><th>繰り返す処理</th><td><meta charset="utf-8">document.write(i + &#8216;&lt;br&gt;&#8217;);</td><td>iを画面に表示する</td></tr></tbody></table></figure>
+
+
+
+<p><code>i++</code>というのは「インクリメント」という処理で、変数に1を加えて代入し直すという処理を一気に行う演算子です。つまりここでは、「0で準備したiという変数が10未満の間、1ずつ加えながらiを画面に表示する」という処理になります。</p>
+
+
+
+<p>これによって、0から9まで画面に表示されたというわけです。</p>
+
+
+
+<h3>while構文はfor構文の書き換え</h3>
+
+
+
+<p>while構文も、書き方が違うだけで書くことはfor構文と同じです。先のプログラムは次のように書き換えることができます。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;script&gt;
+let i = 0; // 初期化
+while (i&lt;10) { // 繰り返し条件
+  document.write(i + '&lt;br&gt;'); // 繰り返す処理
+  i++;  // 更新処理
+}</code></pre>
+
+
+
+<p>これで同じように動作します。上記にコメント（//以降の文字列）を記述したとおり、同じ事が書かれていますね。</p>
+
+
+
+<p>そのため、簡単な繰り返し条件の場合はfor構文の方が、簡潔に記述する事ができます。しかし、条件が複雑になったり、複数の条件を重ねて繰り返したい場合などには、for構文に記述しようとすると複雑になりすぎてしまうため、このような場合にwhile構文を利用していきます。</p>
+
+
+
+<h2>万年カレンダーを作ろう</h2>
+
+
+
+<p>それでは、万年カレンダーを作っていきましょう。まずは、ある年の元日の日付で<code>Date</code>オブジェクトを作成します。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;script&gt;
+const thisYear = 2021; // 今年の年
+let day = new Date(thisYear, 0, 1);
+document.write(day.getFullYear());
+&lt;/script&gt;</code></pre>
+
+
+
+<p>これで、画面には「2021」と表示されます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="2426" data-permalink="https://tomosta.jp/article/js-while-calendar/attachment/image-1-18/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-1.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-1" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-1.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-1.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-1.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-2426" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-1.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-1.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-1.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-1.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-1.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>ここでは、最初に<code>thisYear</code>という変数を準備して、この記事の執筆年である2021を代入しています。そして、この変数を使って<code>Date</code>オブジェクトを作成します。なお、<code>Date</code>オブジェクトは②番目のパラメーターが特殊で、1月を指定する場合は「0」にする必要があるので、ここでは1月1日という意味で「0, 1」と指定しています。</p>
+
+
+
+<p>そしたらこれで、オブジェクトができあがるので<code>getFullYear()</code>という、年を知るためのメソッドを使って画面に表示してみました。これで、オブジェクトの準備が完了です。</p>
+
+
+
+<h3>日付をすべて表示しよう</h3>
+
+
+
+<p>次に、<code>document.write</code>メソッドを使ってその他の要素も表示してみましょう。次のように追加します。</p>
+
+
+
+<pre class="wp-block-code"><code>...
+document.write(day.getFullYear());
+<strong>document.write('/');
+document.write(day.getMonth() + 1);
+document.write('/');
+document.write(day.getDate());</strong>
+...</code></pre>
+
+
+
+<p>これで画面には、スラッシュ区切りの日付が表示されます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="2430" data-permalink="https://tomosta.jp/article/js-while-calendar/attachment/image-2-16/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-2.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-2" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-2.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-2.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-2.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-2430" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-2.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-2.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-2.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-2.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-2.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p><code>getMonth()</code>メソッドは、やはり月から1を引いた数が取得されるので、1を加えて表示しています。</p>
+
+
+
+<p>さらに、曜日も表示してみましょう。次のように追加します。</p>
+
+
+
+<pre class="wp-block-code"><code>...
+<meta charset="utf-8">document.write(day.getDate());
+<strong>document.write('（' + day.getDay() + '）');
+</strong>...</code></pre>
+
+
+
+<p>これで、次のように曜日が数字で表示されます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="2434" data-permalink="https://tomosta.jp/article/js-while-calendar/attachment/image-3-14/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-3.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-3" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-3.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-3.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-3.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-2434" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-3.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-3.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-3.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-3.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-3.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p><code>getDay()</code>というメソッドは、日曜日を0、月曜日を1という具合に数字にして取得できるメソッドです。ここでは、2021年1月1日が金曜日だったので、5という数字が表示されました。</p>
+
+
+
+<h3>日付を加えよう</h3>
+
+
+
+<p>これで、元日の日付を表示できました。では、別の日の日付を表示するにはどうしたら良いでしょう？　ここでは、<code>setDate()</code>というメソッドを利用します。次のように追加してみましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>...
+let day = new Date(thisYear, 0, 1);
+<strong>day.setDate(day.getDate() + 1);
+</strong>document.write(day.getFullYear());
+...</code></pre>
+
+
+
+<p>これで、今度は1月2日土曜日の日付が表示されました。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="2437" data-permalink="https://tomosta.jp/article/js-while-calendar/attachment/image-4-12/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-4.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-4" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-4.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-4.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-4.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-2437" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-4.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-4.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-4.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-4.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-4.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p><code>setDate()</code>というメソッドは、「日付を設定する」というメソッドでパラメーターに数字を指定すると、その日に指定されます。ここでは、さらにパラメーターの中で今日の日付を取得する<code>getDate()</code>を利用して、それに1を加えているため「次の日」の日付を設定しています。これによって、1月2日の日付に変化しました。</p>
+
+
+
+<p>このメソッドの便利な点は、月や年をまたいでも日付がおかしな設定にはなりません。例えば、32などという数字を与えても、31日しかなければ翌月に変わって2月1日になるなど、自動的に計算を行ってくれます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="2439" data-permalink="https://tomosta.jp/article/js-while-calendar/attachment/image-5-13/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-5.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-5" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-5.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-5.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-5.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-2439" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-5.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-5.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-5.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-5.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-5.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>そのため、このメソッドを使って日付を更新しながら繰り返していけば、カレンダーが作れることになります。</p>
+
+
+
+<h3>繰り返し構文を作ろう</h3>
+
+
+
+<p>それではプログラムを次のように変えていきましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>    &lt;script&gt;
+        const thisYear = 2021; // 今年の年
+        let day = new Date(thisYear, 0, 1);
+
+        while (day.getFullYear() === thisYear) {
+            document.write(day.getFullYear());
+            document.write('/');
+            document.write(day.getMonth() + 1);
+            document.write('/');
+            document.write(day.getDate());
+            document.write('（' + day.getDay() + '）');
+            document.write('&lt;br&gt;');
+
+            // 1日足す
+            day.setDate(day.getDate() + 1);
+        }
+    &lt;/script&gt;
+</code></pre>
+
+
+
+<p>すると、2021年のすべての日付が表示されるようになります。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="2442" data-permalink="https://tomosta.jp/article/js-while-calendar/attachment/image-6-11/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-6.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-6" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-6.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-6.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-6.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-2442" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-6.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-6.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-6.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-6.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-6.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>ここで、<code>while</code>構文の条件をみてみましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>while (day.getFullYear() === thisYear) {</code></pre>
+
+
+
+<p><code>getFullYear()</code>メソッドは先の通り、年を取得するためのメソッドです。そのため、2021が取得されます。また、<code>thisYear</code>も2021を代入しているので、ここでは等しい（===）という条件が成り立つので、繰り返し処理が発生します。</p>
+
+
+
+<p>処理では日付を画面に表示した後、1日を足しています。こうすることで、どんどんと日付が更新されながら画面に表示されています。</p>
+
+
+
+<p>そして、2021年12月31日を出力した後、1が加わると、2022年1月1日になります。すると、<code>getFullYear()</code>メソッドで取得できる年も「2022」になってしまい、左記の条件が成り立たなくなります。そのため、ここで繰り返し処理が終わるというわけです。</p>
+
+
+
+<h3>曜日を日本語で表示しよう</h3>
+
+
+
+<p>最後に、曜日が数字のままでは分かりにくいので日本語に変えてみましょう。ここでは、「配列」を使えば数字を日本語に変えることができます。まずは、次のような配列を準備します。</p>
+
+
+
+<pre class="wp-block-code"><code>const week = &#91;'日', '月', '火', '水', '木', '金', '土'];</code></pre>
+
+
+
+<p>そして、画面に出力する箇所で配列を出力するように変更します。</p>
+
+
+
+<pre class="wp-block-code"><code>document.write('（' + week&#91;day.getDay()] + '）');</code></pre>
+
+
+
+<p>これで、曜日が日本語で表示されます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="2444" data-permalink="https://tomosta.jp/article/js-while-calendar/attachment/image-7-11/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-7.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-7" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-7.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-7.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-7.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-2444" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-7.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-7.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-7.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-7.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/12/image-7.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h2>プログラム全文</h2>
+
+
+
+<pre class="wp-block-code"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;万年カレンダー&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;script&gt;
+        const thisYear = 2021; // 今年の年
+        let day = new Date(thisYear, 0, 1);
+        const week = &#91;'日', '月', '火', '水', '木', '金', '土'];
+
+        while (day.getFullYear() === thisYear) {
+            document.write(day.getFullYear());
+            document.write('/');
+            document.write(day.getMonth() + 1);
+            document.write('/');
+            document.write(day.getDate());
+            document.write('（' + week&#91;day.getDay()] + '）');
+            document.write('&lt;br&gt;');
+
+            // 1日足す
+            day.setDate(day.getDate() + 1);
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">2416</post-id>	</item>
+		<item>
+		<title>Microsoft EdgeとInternet Explorerってどう違うの？　Chromeの仲間ってどういう事？</title>
+		<link>https://tomosta.jp/blog/edge-vs-ie/</link>
+		
+		<dc:creator><![CDATA[たにぐち　まこと]]></dc:creator>
+		<pubDate>Fri, 15 Oct 2021 05:05:50 +0000</pubDate>
+				<category><![CDATA[ブログ]]></category>
+		<guid isPermaLink="false">https://tomosta.jp/?p=2292</guid>
+
+					<description><![CDATA[2021年に登場したMicrosoftの最新OS『Windows 11』には、標準ウェブブラウザーとして「Microsoft Edge（以下、Edge）」が搭載されています。 Microsoftといえば、長らく「Inte [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>2021年に登場したMicrosoftの最新OS『Windows 11』には、標準ウェブブラウザーとして「Microsoft Edge（以下、Edge）」が搭載されています。</p>
+
+
+
+<p>Microsoftといえば、長らく「Internet Explorer（IE）」というウェブブラウザーをWindowsに搭載していましたが、現在では開発やサポートを終了し、この「Edge」に軸足を移しています。</p>
+
+
+
+<p>では、Microsoft EdgeとMicrosoft Internet Explorerはなにが違うのでしょうか？　さらに、同じEdgeでも実は別のものが存在するのをご存じでしょうか？　ここでは、そんなMicrosoft Edgeの秘密について紹介しましょう。</p>
+
+
+
+<h2>ブラウザーの本体はレンダリングエンジン</h2>
+
+
+
+<p>ここで、IEとEdgeの違いを「ソフトの見た目」とか「アイコンや名前」という部分で語ってしまうとおかしな事になってしまうので、それは無視した上で「ブラウザーとしてなにが違うのか」という部分に着目すると「レンダリングエンジンが違う」というのが結論になります。</p>
+
+
+
+<p>レンダリングエンジンとは、HTMLやCSSなどを解釈してウェブページの画面を作り上げるためのエンジン部分です。このレンダリングエンジンの解釈によって、ウェブページの作り方に違いが出てしまうため、同じHTMLの内容を記述しているにもかかわらず、少しだけ見た目が違うとか、うまく再現されないなどの現象が発生してしまいます。</p>
+
+
+
+<p>実際、以前はレンダリングエンジンを各ブラウザーメーカーが独自に開発していたため、IEと他のブラウザーで見た目が異なるということが頻発していました。</p>
+
+
+
+<p>そこで、Appleは同社のウェブブラウザー「Safari」を開発するときに、レンダリングエンジンを独自に開発するのではなく、すでにオープンソースとして開発が進められていた「WebKit（当時はKHTML）」というエンジンを搭載します。つまり、SafariというブラウザーはWebKitにブラウザーの機能をかぶせただけのものだったのです。</p>
+
+
+
+<p>しかしこれが功を奏し、Safariは開発に苦労することなくウェブの最新技術に追従できるブラウザーとして存在感を強めることになります。</p>
+
+
+
+<h2>WebKit系が世界を制覇</h2>
+
+
+
+<p>その後WebKitは、Googleにも認められ、同社の「Chrome」にも搭載されるようになります。なお、Googleはその後WebKitを改良して「Blink」という別のレンダリングエンジンを開発し、現在はBlinkがベースになってはいるものの、「WebKit系」という意味では同じようなエンジンとなります。</p>
+
+
+
+<p>その後もWebKit系を採用するブラウザーベンダーは次々に登場し、PlayStationなどのゲーム機を始め、新興メーカーが開発するブラウザーなどにも採用されるようになりました。この時点で、レンダリングエンジンとしては次のようなものが残っていました。</p>
+
+
+
+<ul><li>Trident &#8211; Internet Explorerのレンダリングエンジン。Microsoftが開発。</li><li>Gecko &#8211; Firefoxで採用されているレンダリングエンジン。その他いくつかのブラウザーが採用している</li><li>WebKitおよびBlink &#8211; SafariやChrome等で採用され、圧倒的に人気のレンダリングエンジン。</li></ul>
+
+
+
+<p>こうして、IEの肩身が狭くなっていったのです。</p>
+
+
+
+<h2>EdgeHTMLの開発に力を注ぐMicrosoft</h2>
+
+
+
+<p>こうして、WebKit系のブラウザーの人気が上がるにつれ、MicrosoftもようやくTridentに見切りをつけて、新しいレンダリングエンジンとして「EdgeHTML」というエンジンを開発します。そして、IE11に一時搭載された後、新しいブラウザーのとして「Microsoft Edge」を開発します。</p>
+
+
+
+<p>ただ、結論からいえば、このレンダリングエンジンはうまく行かず、「現在のEdge」には搭載されていません。つまり、Microsoft Edgeには正確には2種類あるのです。（EdgeHTMLを搭載したEdgeを「旧Edge」などと呼びます）</p>
+
+
+
+<p>EdgeHTMLを搭載したEdgeは、Windows 10などに搭載されましたが、シェアは上がらずGoogle Chromeに圧倒的な差をつけられてしまいます。そこで2020年、MicrosoftはBlinkをレンダリングエンジンに採用した新しいEdge（これを、Chromium Edgeなどと呼びます）を開発し、現在のWindows 11などに搭載します。</p>
+
+
+
+<p>これにより、現在利用されているブラウザーは、Firefoxを除けばほとんどがWebKit系のブラウザーという事になります。これにより、ウェブ制作者はブラウザーごとの表示の差異をあまり気にせず、ウェブ制作ができるようになったというわけです。</p>
+
+
+
+<p>今後も、WebKitやBlinkの進化に目が離せません。</p>
+
+
+
+<ul><li><a href="https://www.microsoft.com/ja-jp/edge">Microsoft Edge</a></li></ul>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">2292</post-id>	</item>
+		<item>
+		<title>『PHP 7/8 プログラミングマスター講座』がUdemyメディアに取り上げられました</title>
+		<link>https://tomosta.jp/news/php-master-for-udemy-media/</link>
+		
+		<dc:creator><![CDATA[たにぐち　まこと]]></dc:creator>
+		<pubDate>Sat, 28 Aug 2021 01:32:39 +0000</pubDate>
+				<category><![CDATA[お知らせ]]></category>
+		<guid isPermaLink="false">https://tomosta.jp/?p=2159</guid>
+
+					<description><![CDATA[Udemyで販売中の『PHP 7/8 プログラミングマスター講座』が、Udemyメディアの「オンライン学習Udemyで上半期最も学ばれた講座7選 （Tech編／人気のPython,GitからReactまで）」に取り上げら [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>Udemyで販売中の『PHP 7/8 プログラミングマスター講座』が、Udemyメディアの「オンライン学習Udemyで上半期最も学ばれた講座7選 （Tech編／人気のPython,GitからReactまで）」に取り上げられました。</p>
+
+
+
+<p>本講座はおかげさまで、多くの方々にご受講頂いております。PHPをしっかり学びたいという方は、是非ご利用ください。ただし、内容的には中級的な内容となるため、先に以下の「PHP+MySQL（MariaDB） Webサーバーサイドプログラミング入門」をご受講いただく事をお勧めいたします。</p>
+
+
+
+<ul><li><a href="https://www.udemy.com/course/php7basic/?referralCode=40B4412347A37B96D388" target="_blank" rel="noreferrer noopener">PHP+MySQL（MariaDB） Webサーバーサイドプログラミング入門</a></li><li><a href="https://www.udemy.com/course/php-master/?referralCode=397F9F422F1A5A30E155">PHP 7/8 プログラミング マスター講座</a></li></ul>
+
+
+
+<ul><li><a href="https://udemy.benesse.co.jp/career/recommend/2021-1sthalf-tech.html?utm_source=pocket_mylist">オンライン学習Udemyで上半期最も学ばれた講座7選 （Tech編／人気のPython,GitからReactまで）</a></li></ul>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">2159</post-id>	</item>
+		<item>
+		<title>この夏学びたいプログラミング言語10選</title>
+		<link>https://tomosta.jp/blog/summer_study_2021/</link>
+		
+		<dc:creator><![CDATA[たにぐち　まこと]]></dc:creator>
+		<pubDate>Fri, 30 Jul 2021 15:41:37 +0000</pubDate>
+				<category><![CDATA[ブログ]]></category>
+		<guid isPermaLink="false">https://tomosta.jp/?p=1954</guid>
+
+					<description><![CDATA[一部の都府県が緊急事態宣言下のこの夏、外出を控えて自宅でのんびりしている方も少なくないでしょう。せっかくなので、この機会にプログラミングを学んでみませんか？ ここでは、この夏、学んでおきたいプログラミング言語をご紹介しま [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+<div class="c-responsive-container-16-9"><iframe loading="lazy" title="この夏学びたいプログラミング言語 10選 2021" width="1220" height="686" src="https://www.youtube.com/embed/uf3OPI-juHU?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+</div></figure>
+
+
+
+<p>一部の都府県が緊急事態宣言下のこの夏、外出を控えて自宅でのんびりしている方も少なくないでしょう。せっかくなので、この機会にプログラミングを学んでみませんか？</p>
+
+
+
+<p>ここでは、この夏、学んでおきたいプログラミング言語をご紹介します。参考書籍や、動画のリンクもつけましたので、ぜひ順番に学んでいきましょう。</p>
+
+
+
+<p><span style="color:#3d3d3d" class="has-inline-color">※ 書籍のアドレスはアフィリエイトリンクです</span></p>
+
+
+
+<div class="wp-block-ideabox-toc"><div class="ib-toc-container ib-toc-list-style-numbers ib-toc-hierarchical ib-toc-expanded"><div class="ib-toc-header"><div class="ib-toc-header-title">Table of Contents</div><div class="ib-toc-header-right"><span class="ib-toc-icon-collapse"><span class="dashicon dashicons dashicons-minus"></span></span><span class="ib-toc-icon-expand"><span class="dashicon dashicons dashicons-plus"></span></span></div></div><div class="ib-toc-separator" style="height:2px"></div><div class="ib-toc-body"><ol class="ib-toc-anchors"></ol></div></div></div>
+
+
+
+<h2>1. HTML Living Standard</h2>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1956" data-permalink="https://tomosta.jp/blog/summer_study_2021/attachment/2055959bd4438a328b81faecfc8d4da1/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/2055959bd4438a328b81faecfc8d4da1.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="2055959bd4438a328b81faecfc8d4da1" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/2055959bd4438a328b81faecfc8d4da1.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/2055959bd4438a328b81faecfc8d4da1.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/2055959bd4438a328b81faecfc8d4da1.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1956" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/2055959bd4438a328b81faecfc8d4da1.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/2055959bd4438a328b81faecfc8d4da1.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/2055959bd4438a328b81faecfc8d4da1.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/2055959bd4438a328b81faecfc8d4da1.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/2055959bd4438a328b81faecfc8d4da1.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>まずは、今やどんな分野でも基礎の知識といえる、HTMLです。ウェブページを構築するのはもちろん、この後紹介する Reactなどのプログラミング言語でも必須の知識となっています。</p>
+
+
+
+<p>HTMLはこれまで、W3Cという標準化団体によって定期的に「勧告」がされ、HTML3.0や HTML5など、バージョン表記がされてきました。しかし、2020年に仕様の策定がブラウザーベンダーが主導する「WHATWG」に移され、バージョン表記をやめて『Living Standard』として、常に最新の仕様がタイムリーにリリースされる形に変わりました。</p>
+
+
+
+<p>すでに、HTMLは知っているという方でも、この機会に改めて確認をしておきましょう。</p>
+
+
+
+<ul><li><a href="https://youtu.be/PNPYCDHGUBQ">[YouTube] HTML Living Standard入門</a></li><li><a href="https://www.udemy.com/course/html-css-js/?referralCode=4B62CC6838D26E1AC5DA">[Udemy] [HTML/CSS/JavaScript] フロントエンドエンジニアになりたい人の Webプログラミング入門</a></li><li><a href="https://amzn.to/36Axr53">[書籍] 1冊ですべて身につくHTML &amp; CSSとWebデザイン入門講座</a></li><li><a href="https://amzn.to/3yRxZzG">[書籍] これからWebをはじめる人のHTML＆CSS、JavaScriptのきほんのきほん</a></li><li><a href="https://amzn.to/3yVsPCJ">[書籍] HTML5&amp;CSS3デザイン 現場の新標準ガイド【第2版】</a></li></ul>
+
+
+
+<h2>2. ECMAScript（JavaScript）</h2>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1957" data-permalink="https://tomosta.jp/blog/summer_study_2021/attachment/92e7014f433423a7e66338779fe2580a/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/92e7014f433423a7e66338779fe2580a.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="92e7014f433423a7e66338779fe2580a" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/92e7014f433423a7e66338779fe2580a.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/92e7014f433423a7e66338779fe2580a.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/92e7014f433423a7e66338779fe2580a.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1957" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/92e7014f433423a7e66338779fe2580a.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/92e7014f433423a7e66338779fe2580a.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/92e7014f433423a7e66338779fe2580a.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/92e7014f433423a7e66338779fe2580a.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/92e7014f433423a7e66338779fe2580a.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>JavaScriptは、現代のプログラミングにおいて、最も重要な言語といえます。ウェブの技術では、完全に独壇場であることはもちろん、今ではモバイルアプリやデスクトップのアプリケーション開発、サーバー上など、オールマイティに活用できます。</p>
+
+
+
+<p>JavaScriptは、Ecma Internationalという標準化団体によって「ECMAScript」という規格として定められています。ECMA Script 2015（ES6）からは、変数の宣言や関数の利用などに大幅な変更が加えられ、各ブラウザーでも対応が進んでいます。</p>
+
+
+
+<p>古い書き方をしている方も、是非新しい書き方に慣れていきましょう。</p>
+
+
+
+<ul><li><a href="https://www.youtube.com/watch?v=pnsieVYy72M">[YouTube] しまぶーの IT大学</a></li><li><a href="https://amzn.to/3wybAWl">[書籍] 改訂新版JavaScript本格入門 ～モダンスタイルによる基礎から現場での応用まで</a></li></ul>
+
+
+
+<h2>3. React / Next.js</h2>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1958" data-permalink="https://tomosta.jp/blog/summer_study_2021/attachment/e4e5f6f1945ad1e563a02d6b3ff2af89/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/e4e5f6f1945ad1e563a02d6b3ff2af89.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="e4e5f6f1945ad1e563a02d6b3ff2af89" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/e4e5f6f1945ad1e563a02d6b3ff2af89.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/e4e5f6f1945ad1e563a02d6b3ff2af89.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/e4e5f6f1945ad1e563a02d6b3ff2af89.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1958" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/e4e5f6f1945ad1e563a02d6b3ff2af89.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/e4e5f6f1945ad1e563a02d6b3ff2af89.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/e4e5f6f1945ad1e563a02d6b3ff2af89.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/e4e5f6f1945ad1e563a02d6b3ff2af89.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/e4e5f6f1945ad1e563a02d6b3ff2af89.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>ウェブの開発において、JavaScriptをそのまま利用するというのはまれで、ライブラリーやフレームワークを利用します。これまで、JavaScriptのライブラリーといえば「jQuery」が定番でした。</p>
+
+
+
+<p>しかし近年、より開発しやすいライブラリーやフレームワークが登場してきています。Vue.jsや Riot.jsなど数多くのライブラリーの中でも、Facebook社を中心に開発された「React」が海外を中心に人気を集めています。</p>
+
+
+
+<p>特に、Reactベースのフレームワークである「Next.js」と組み合わせて使われることが多く、近年流行している「ヘッドレスCMS」の開発などに活用されています。</p>
+
+
+
+<ul><li><a href="https://www.youtube.com/watch?v=YoIQ_FIBlYY">[YouTube] Next.js超入門 セットアップから Vercelへの公開まで</a></li><li><a href="https://amzn.to/2VFuxKd">[書籍] React.js＆Next.js超入門 第2版</a></li></ul>
+
+
+
+<h3>【言葉】ライブラリーとフレームワーク</h3>
+
+
+
+<p>ライブラリーとは、HTMLファイルなどに取り込んで使うもので、後から機能などを追加して使います。小規模なページの制作などに適しています。</p>
+
+
+
+<p>対してフレームワークは骨組みとして使われ、はじめからフレームワークを利用して、その上にウェブサイトやシステムを丸ごと構築します。大規模なシステムの開発に適しています。</p>
+
+
+
+<p>ただ近年は、ライブラリーとフレームワークという言葉の定義は曖昧になり、どちらの意味にも使われることがあります。</p>
+
+
+
+<h3>【言葉】ヘッドレスCMS</h3>
+
+
+
+<p>従来のコンテンツ管理システム（CMS）は、管理部分と表示部分を両方担っていました。しかし、サーバー上で動作する CMSは処理に時間がかかってしまうため、表示速度のネックになっていました。</p>
+
+
+
+<p>そこで、管理部分と表示部分で処理を分け、管理部分だけに特化したのが「ヘッドレスCMS」です。代表的なサービスには、Contentfulや microCMSなどがあります。</p>
+
+
+
+<p>利用には、表示部分を JavaScriptなどで実装するのが必要で、そのためのフレームワークである「Gatsby」などもあります。</p>
+
+
+
+<h2>4. TypeScript</h2>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1959" data-permalink="https://tomosta.jp/blog/summer_study_2021/attachment/aadf2471cbc95529186289a92a7d9f42/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aadf2471cbc95529186289a92a7d9f42.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aadf2471cbc95529186289a92a7d9f42" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aadf2471cbc95529186289a92a7d9f42.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aadf2471cbc95529186289a92a7d9f42.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aadf2471cbc95529186289a92a7d9f42.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1959" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aadf2471cbc95529186289a92a7d9f42.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aadf2471cbc95529186289a92a7d9f42.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aadf2471cbc95529186289a92a7d9f42.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aadf2471cbc95529186289a92a7d9f42.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aadf2471cbc95529186289a92a7d9f42.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>JavaScriptは手軽な反面、「型」という概念がないというデメリットがあります。初学者のうちは、型の重要性は理解しにくいですが、チームでプログラミング開発をする場合や、大規模な開発をする場合は型の有無は死活問題です。</p>
+
+
+
+<p>そこで、Microsoftが開発したJavaScriptの互換言語（スーパーセットといいます）が TypeScriptです。変数やクラスに型をつけることができ、厳格なエラーチェックが行えます。作り終わったら、JavaScriptに変換できるので、従来のブラウザーでも動作可能。今では、TypeScriptを開発に採用している現場も少なくありません。</p>
+
+
+
+<p>現在では、JavaScriptの学習の代わりに TypeScriptから始めることもあります。</p>
+
+
+
+<ul><li><a href="https://www.youtube.com/playlist?list=PLh6V6_7fbbo9_OAa_Uu8j6oTaHogUHhW4">[YouTube] TypeScriptで学ぶJavaScript(ES6)</a></li><li><a href="https://amzn.to/3eeiBFt">[書籍] 実践TypeScript</a></li></ul>
+
+
+
+<h2>5. GraphQL</h2>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1960" data-permalink="https://tomosta.jp/blog/summer_study_2021/attachment/1e72b240675d395468bf9b8938578631/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/1e72b240675d395468bf9b8938578631.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="1e72b240675d395468bf9b8938578631" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/1e72b240675d395468bf9b8938578631.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/1e72b240675d395468bf9b8938578631.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/1e72b240675d395468bf9b8938578631.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1960" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/1e72b240675d395468bf9b8938578631.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/1e72b240675d395468bf9b8938578631.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/1e72b240675d395468bf9b8938578631.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/1e72b240675d395468bf9b8938578631.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/1e72b240675d395468bf9b8938578631.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>JavaScriptでアプリケーションを作成する際、必須になるのがサーバーとのデータのやり取りです。そこでは「API（Application Programming Interface）」という窓口を通じてやりとりをするのですが、ここで一般的に利用されているのは「REST API」と呼ばれる技術でした。</p>
+
+
+
+<p>しかし、REST APIには無駄のデータのやり取りが多く、効率が悪かったため Facebookらによって新しいインタフェースである「GraphQL」が開発されました。</p>
+
+
+
+<p>簡単なフォーマットで問い合わせ（Query）の書式を作成し、サーバーに問い合わせをすれば適切なデータが必要な量だけ取得でき、効率よく開発することができます。</p>
+
+
+
+<p>ヘッドレスCMSや、SPA（Single Page Application）の開発などに今後必須となっていくので、この機会に学習しておくとよいでしょう。</p>
+
+
+
+<ul><li><a href="https://amzn.to/3xDDf9E">[書籍] 初めてのGraphQL ―Webサービスを作って学ぶ新世代API</a></li></ul>
+
+
+
+<h2>6. PHP / WordPress</h2>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1961" data-permalink="https://tomosta.jp/blog/summer_study_2021/attachment/0852637b914fd1603f1e1ff2bd1f2b69/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/0852637b914fd1603f1e1ff2bd1f2b69.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="0852637b914fd1603f1e1ff2bd1f2b69" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/0852637b914fd1603f1e1ff2bd1f2b69.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/0852637b914fd1603f1e1ff2bd1f2b69.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/0852637b914fd1603f1e1ff2bd1f2b69.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1961" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/0852637b914fd1603f1e1ff2bd1f2b69.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/0852637b914fd1603f1e1ff2bd1f2b69.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/0852637b914fd1603f1e1ff2bd1f2b69.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/0852637b914fd1603f1e1ff2bd1f2b69.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/0852637b914fd1603f1e1ff2bd1f2b69.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>従来型CMSの代表として揺るぎないのがWordPress。ヘッドレスCMSが台頭していますが、WordPressはヘッドレスCMSとしても利用できるため、まだまだ人気が衰えることはありません。</p>
+
+
+
+<p>WordPressの開発言語の PHPも、最新バージョンの 8となり、懸案であった動作速度なども劇的に改善しており、こちらも人気は衰えません。是非、押さえておきたい言語といえます。</p>
+
+
+
+<ul><li><a href="https://www.youtube.com/playlist?list=PLh6V6_7fbbo9tiOuud_L0x88DZfNMAx9D">[YouTube] WordPress開発講座</a></li><li><a href="https://www.udemy.com/course/wordpress_master/?referralCode=0F25EA7ADADE55D90BCE">[Udemy] WordPress開発マスター講座</a></li><li><a href="https://amzn.to/3wAu74y">[書籍] 世界一わかりやすいWordPress　導入とサイト制作の教科書［改訂2版］</a></li></ul>
+
+
+
+<h2>7. Dart / Flutter</h2>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1962" data-permalink="https://tomosta.jp/blog/summer_study_2021/attachment/7f3c3dd5922d824b62cb75237a67ae59/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/7f3c3dd5922d824b62cb75237a67ae59.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="7f3c3dd5922d824b62cb75237a67ae59" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/7f3c3dd5922d824b62cb75237a67ae59.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/7f3c3dd5922d824b62cb75237a67ae59.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/7f3c3dd5922d824b62cb75237a67ae59.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1962" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/7f3c3dd5922d824b62cb75237a67ae59.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/7f3c3dd5922d824b62cb75237a67ae59.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/7f3c3dd5922d824b62cb75237a67ae59.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/7f3c3dd5922d824b62cb75237a67ae59.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/7f3c3dd5922d824b62cb75237a67ae59.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>スマホアプリの開発といえば、これまでは iOSなら Swift、Androidなら Kotlinと別々の言語が必要でした。そのため、マルチデバイスのアプリを開発するには、かなりの労力がかかりました。</p>
+
+
+
+<p>そこで、Googleが開発しているのがマルチデバイス技術の Flutterです。独自の Dartという言語を使うものの、JavaScriptに似た構文で開発ができ、iOS/Android両対応のアプリを開発できます。さらには、ウェブやデスクトップアプリなどの開発なども可能なように開発が進められており、今後非常に注目の技術といえます。</p>
+
+
+
+<ul><li><a href="https://www.youtube.com/channel/UCReuARgZI-BFjioA8KBpjsw">[YouTube] KBOYのFlutter大学</a></li><li><a href="https://amzn.to/3kbl1Zt">[書籍] 基礎から学ぶ Flutter</a></li></ul>
+
+
+
+<h2>8. Python</h2>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1963" data-permalink="https://tomosta.jp/blog/summer_study_2021/attachment/66d4a18a0510ebf5da48247d84adf607/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/66d4a18a0510ebf5da48247d84adf607.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="66d4a18a0510ebf5da48247d84adf607" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/66d4a18a0510ebf5da48247d84adf607.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/66d4a18a0510ebf5da48247d84adf607.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/66d4a18a0510ebf5da48247d84adf607.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1963" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/66d4a18a0510ebf5da48247d84adf607.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/66d4a18a0510ebf5da48247d84adf607.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/66d4a18a0510ebf5da48247d84adf607.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/66d4a18a0510ebf5da48247d84adf607.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/66d4a18a0510ebf5da48247d84adf607.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>今、最も人気のある言語といえば Pythonがあげられます。学習しやすい上に、非常に強力で人工知能の開発にも活用されています。ウェブ上でも Djangoというフレームワークで活用でき、手軽な開発ができます。</p>
+
+
+
+<p>今からプログラミング言語を学習したいという場合には、Pythonからスタートするとスムーズでしょう。</p>
+
+
+
+<ul><li><a href="https://www.youtube.com/playlist?list=PLh6V6_7fbbo-MthKEzA7e7_rPhUx2mqj-">[YouTube] Python入門</a></li><li><a href="https://amzn.to/3AVwEJI">[書籍] Python 1年生 体験してわかる！会話でまなべる！プログラミングのしくみ</a></li></ul>
+
+
+
+<h2>9. Bubble</h2>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1964" data-permalink="https://tomosta.jp/blog/summer_study_2021/attachment/355925675064cc8407fb258e5eb304d6/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/355925675064cc8407fb258e5eb304d6.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="355925675064cc8407fb258e5eb304d6" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/355925675064cc8407fb258e5eb304d6.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/355925675064cc8407fb258e5eb304d6.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/355925675064cc8407fb258e5eb304d6.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1964" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/355925675064cc8407fb258e5eb304d6.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/355925675064cc8407fb258e5eb304d6.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/355925675064cc8407fb258e5eb304d6.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/355925675064cc8407fb258e5eb304d6.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/355925675064cc8407fb258e5eb304d6.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>「ノーコード」という言葉が流行しています。プログラミングで記述する「コード」を必要としないため「No Code」と呼ばれ、ノーコードツールを利用してビジネスアプリや、簡単なスマホアプリを開発できるというもの。</p>
+
+
+
+<p>Googleや Amazonなども続々とノーコードツールに参入していて、今年以降より一般的になっていくでしょう。なかでも、先駆者として開発されているのが「Bubble」と「Adalo」です。</p>
+
+
+
+<p>デザイン性に優れた Adaloと、本格的な開発が行える Bubbleという住み分けがありますが、しっかり学習するなら Bubbleがおすすめです。</p>
+
+
+
+<ul><li><a href="https://www.youtube.com/channel/UCa3cFggd3BrJ6qq5lw8P_9w">[YouTube] NoCode School &#8211; ノーコードスクール &#8211;</a></li><li><a href="https://amzn.to/2T6hwrX">[書籍] 基礎から学ぶ ノーコード開発</a></li></ul>
+
+
+
+<h2>10. WebFlow</h2>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1965" data-permalink="https://tomosta.jp/blog/summer_study_2021/attachment/d2ede0e671719cbc076c482ce5bf4cad/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/d2ede0e671719cbc076c482ce5bf4cad.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="d2ede0e671719cbc076c482ce5bf4cad" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/d2ede0e671719cbc076c482ce5bf4cad.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/d2ede0e671719cbc076c482ce5bf4cad.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/d2ede0e671719cbc076c482ce5bf4cad.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1965" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/d2ede0e671719cbc076c482ce5bf4cad.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/d2ede0e671719cbc076c482ce5bf4cad.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/d2ede0e671719cbc076c482ce5bf4cad.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/d2ede0e671719cbc076c482ce5bf4cad.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/d2ede0e671719cbc076c482ce5bf4cad.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>ウェブサイトの制作でのノーコードの例外ではありません。ウェブサイトの制作には古くから、「オーサリングツール」ト呼ばれるツールで HTMLや CSSを意識することなくページを制作するというスタイルは存在していましたが、なかなか思うようなデザインができずに歯がゆい思いをすることもありました。</p>
+
+
+
+<p>しかし近年のノーコードツールの発展はめざましく、Wixや Jimdo、国産では STUDIOなど、デザイン性の高いページを制作できるツールが登場してきました。</p>
+
+
+
+<p>なかでも、WebFlowは英語インターフェイスしかないものの、プロでも唸るほどの高機能を誇っていて、HTMLや CSSを手でしたのと同じようなデザイン性の高いページを作ることができます。</p>
+
+
+
+<p>その分、専門的な知識や難解のツールになれる必要がありますが、学習する価値は十分にあります。</p>
+
+
+
+<ul><li><a href="https://www.youtube.com/channel/UCsGq3nlFuMApRlZ5KLyQarA/videos">[YouTube] LikePay dev Academy</a></li><li><a href="https://www.youtube.com/channel/UCELSb-IYi_d5rYFOxWeOz5g">[YouTube] WebFlow（英語）</a></li></ul>
+
+
+
+<h2>まとめ</h2>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1966" data-permalink="https://tomosta.jp/blog/summer_study_2021/attachment/aeb242a6ee13a5e85f3de13b5040adc8/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aeb242a6ee13a5e85f3de13b5040adc8.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aeb242a6ee13a5e85f3de13b5040adc8" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aeb242a6ee13a5e85f3de13b5040adc8.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aeb242a6ee13a5e85f3de13b5040adc8.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aeb242a6ee13a5e85f3de13b5040adc8.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1966" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aeb242a6ee13a5e85f3de13b5040adc8.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aeb242a6ee13a5e85f3de13b5040adc8.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aeb242a6ee13a5e85f3de13b5040adc8.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aeb242a6ee13a5e85f3de13b5040adc8.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/aeb242a6ee13a5e85f3de13b5040adc8.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>いかがだったでしょうか？　さすがにこの夏に全部を学習するのは難しいと思いますが、まずは HTML/JavaScript/React位までを目標に学習を始め、その後ノーコードに行くか、WordPressに行くか、はたまた JavaScriptを極めるかなど、自分の将来に合わせて学習するものを選んでみて頂けると幸いです。</p>
+
+
+
+<p>是非、コツコツと学習を進めていきましょう。私の YouTubeでも、常に学習に役立つ動画をアップしていますので、もしよろしければ是非ともチャンネル登録をして頂けると幸いです。</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">1954</post-id>	</item>
+		<item>
+		<title>WordPress 5.8リリース。変更点とバージョンアップの注意点</title>
+		<link>https://tomosta.jp/blog/wordpress5-8/</link>
+		
+		<dc:creator><![CDATA[たにぐち　まこと]]></dc:creator>
+		<pubDate>Thu, 22 Jul 2021 12:54:12 +0000</pubDate>
+				<category><![CDATA[ブログ]]></category>
+		<guid isPermaLink="false">https://tomosta.jp/?p=1864</guid>
+
+					<description><![CDATA[WordPressが、5.8にバージョンアップしました。WordPressは小数第2位がマイナーバージョン、整数部と小数第1位がメジャーバージョンとされています。（5.9の次が 6.0になる予定？） メジャーバージョンに [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+<div class="c-responsive-container-16-9"><iframe loading="lazy" title="WordPress 5.8で変わった点とバージョンアップの注意点" width="1220" height="686" src="https://www.youtube.com/embed/pkTBE2dwB-s?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+</div></figure>
+
+
+
+<p>WordPressが、5.8にバージョンアップしました。WordPressは小数第2位がマイナーバージョン、整数部と小数第1位がメジャーバージョンとされています。（5.9の次が 6.0になる予定？）</p>
+
+
+
+<p>メジャーバージョンには、ジャズ奏者からコードネームがつけられ、5.8は「Tatum」と名付けられました。</p>
+
+
+
+<p>ここでは、Tatumでなにが変わったのかやバージョンアップ時の注意点、バージョンダウンの方法などを紹介しましょう。</p>
+
+
+
+<h2>ウィジットがブロックエディターに</h2>
+
+
+
+<p>今回のバージョンで最も大きな変更点は、ウィジット管理がブロックエディターに変化しました。直感的にウィジットを編集できるようになりました。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1866" data-permalink="https://tomosta.jp/blog/wordpress5-8/attachment/image-56/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-56.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-56" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-56.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-56.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-56.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1866" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-56.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-56.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-56.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-56.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-56.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h2>投稿テンプレート機能</h2>
+
+
+
+<p>投稿や固定ページにテンプレートを作ることができるようになりました。この機能は、標準では無効になっているため、functions.phpに次のように追加する必要があります。</p>
+
+
+
+<pre class="wp-block-code"><code>add_theme_support('block-templates');</code></pre>
+
+
+
+<p>すると、投稿画面の右側のパネルに「テンプレート」というパネルが準備され、テンプレートを作ることができます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1867" data-permalink="https://tomosta.jp/blog/wordpress5-8/attachment/image-57/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-57.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-57" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-57.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-57.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-57.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1867" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-57.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-57.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-57.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-57.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-57.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>テンプレートを変更すると、同じテンプレートを使っているその他の画面も統一して変更が加わります。これによって、特別なページデザインを作ったり、特定の要素を各ページに挿入するなどが可能になります。</p>
+
+
+
+<h2>新しいブロックの追加</h2>
+
+
+
+<p>テンプレート機能の追加に伴って、サイト名や投稿の一覧などもブロックで追加ができるようになりました。これで、さまざまなレイアウトのテンプレートを作成したり、既存の固定ページなどに投稿一覧などを追加できます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1868" data-permalink="https://tomosta.jp/blog/wordpress5-8/attachment/image-58/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-58.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-58" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-58.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-58.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-58.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1868" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-58.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-58.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-58.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-58.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-58.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h2>アウトラインがリストビューに</h2>
+
+
+
+<p>これまで、文書内の構造を一覧できる「アウトライン」がありましたが、これがサイドエリアに表示しっぱなしにできる「リストビュー」に変わりました。巨大な文書内も自由に行き来できるようになりました。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1869" data-permalink="https://tomosta.jp/blog/wordpress5-8/attachment/image-59/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-59.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-59" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-59.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-59.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-59.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1869" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-59.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-59.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-59.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-59.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-59.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h2>おすすめパターンの追加</h2>
+
+
+
+<p>「ブロックタイプ又はスタイルを変更」リストの中に「パターン」が追加され、おすすめのパターンからスタイルを変えられるようになります。現状は、クエリーとソーシャルアイコンにのみ実装されていますが、今後順次増加していくとのことです。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1870" data-permalink="https://tomosta.jp/blog/wordpress5-8/attachment/image-60/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-60.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-60" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-60.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-60.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-60.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1870" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-60.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-60.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-60.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-60.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-60.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h2>画像にデュオトーンフィルターの追加</h2>
+
+
+
+<p>画像ブロックには「デュオトーンフィルター」が追加されました。これは、写真を2色に分けて着色するもので、オシャレなアイキャッチを簡単に作ることができます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1871" data-permalink="https://tomosta.jp/blog/wordpress5-8/attachment/image-61/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-61.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-61" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-61.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-61.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-61.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1871" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-61.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-61.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-61.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-61.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-61.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h2>WebP形式のサポート</h2>
+
+
+
+<p>WebPは、新しい画像形式で非常に小さく圧縮できます。Chromeなどを始めじょじょに対応進んでいますが、WordPressではこれまでアップロードができませんでした。5.8からはアップロードが可能になります。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1872" data-permalink="https://tomosta.jp/blog/wordpress5-8/attachment/image-62/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-62.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-62" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-62.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-62.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-62.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1872" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-62.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-62.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-62.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-62.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-62.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h2>theme.jsonの導入</h2>
+
+
+
+<p>ビジュアルエディターのカスタマイズが JSONファイルでできるようになりました。テーマフォルダーに「theme.json」という名前のファイルを作成し、例えば次の記述をしましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>{
+    "version": 1,
+    "settings": {
+        "color": {
+            "palette": &#91;
+                {
+                    "name": "Black",
+                    "slug": "black",
+                    "color": "#000000"
+                },
+                {
+                    "name": "White",
+                    "slug": "white",
+                    "color": "#ffffff"
+                }
+            ]
+        }
+    }
+}</code></pre>
+
+
+
+<p>これにより、色の選択が黒と白だけになります。こうして、オリジナルのカラーパレットを定義できます。この他にもさまざまなカスタマイズができます。こちらは、別の記事にしようと思います。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1873" data-permalink="https://tomosta.jp/blog/wordpress5-8/attachment/image-63/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-63.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-63" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-63.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-63.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-63.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1873" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-63.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-63.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-63.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-63.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-63.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h2>5.8は自動アップデートがかかる</h2>
+
+
+
+<p>これまで、WordPressはマイナーバージョンアップ（小数点第2位）は自動アップデートが標準で、メジャーアップデートについては手動でアップデートする必要がありました。</p>
+
+
+
+<p>しかし、5.6以降の WordPressを新規インストールした場合は、メジャーアップデートも自動アップデートが標準になったようです。</p>
+
+
+
+<p>ただし、メジャーアップデートは若干注意が必要です。プラグインやテーマによっては対応できていなくて表示が崩れたり、クラッシュしたりする事がまれにあります。</p>
+
+
+
+<p>そのため、バックアップやテスト環境での検証をしてからアップデートするというポリシーのサイトも少なくありません。しかし、最近構築サイトの場合は意図せずバージョンアップされてしまっているケースがあります。</p>
+
+
+
+<p>これを無効にする場合には「ダッシュボード→更新」から、「メンテナンスリリースとセキュリティリリースのみの自動更新に切り替えます」リンクをクリックしましょう。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1874" data-permalink="https://tomosta.jp/blog/wordpress5-8/attachment/image-64/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-64.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-64" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-64.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-64.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-64.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1874" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-64.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-64.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-64.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-64.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-64.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>あまり推奨されない変更のためか、少し分かりにくい表現になっています。</p>
+
+
+
+<h2>意図せぬバージョンアップをバージョンダウンする</h2>
+
+
+
+<p>5.8は 7月 22日現在まだ対応できていないプラグインが存在しています。そのため、バージョンアップしてしまった場合はバージョンダウンして利用することができます。</p>
+
+
+
+<p>念のため作業前にバックアップを取得しておきましょう。</p>
+
+
+
+<p>まずは、次のサイトから旧バージョンをダウンロードします。<br><a href="https://ja.wordpress.org/download/releases/">リリース | WordPress.org 日本語</a></p>
+
+
+
+<p>そしたら「wp-content」フォルダーを【除いて】、ファイルやフォルダーをアップロードしてファイルを上書きしましょう。wp-contentには、テーマやプラグインなど、後から自分でインストールしたものなどが含まれているため、これを上書きしてしまうとすべて消えてしまうので注意しましょう。</p>
+
+
+
+<p>そして、wp-contentフォルダー内は「languages」フォルダーの中だけ、上書きしましょう。こうして、自分でインストールした</p>
+
+
+
+<p>これで旧バージョンに戻す事ができます。</p>
+
+
+
+<h2>ノーコードに舵を切った WordPress</h2>
+
+
+
+<p>WordPress 5.8の変更点を見て、WordPressはますますノーコードに舵を切ったなと感じました。これまでは、PHPを学んでテーマをカスタマイズしたり、オリジナルのテーマを制作して利用するのが主流でしたが、これからはやることとしては JSONファイルを書き換える程度で、対応したテーマを使ってブロックエディターですべてを作れるようにするのが WordPressの理想としている姿なのかなと感じます。</p>
+
+
+
+<p>今後の開発がますます楽しみです。</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">1864</post-id>	</item>
+		<item>
+		<title>Next.js超入門 &#8211; セットアップからVercelへの公開まで</title>
+		<link>https://tomosta.jp/article/nextjs-basic/</link>
+		
+		<dc:creator><![CDATA[たにぐち　まこと]]></dc:creator>
+		<pubDate>Thu, 01 Jul 2021 09:00:00 +0000</pubDate>
+				<category><![CDATA[入門記事]]></category>
+		<category><![CDATA[pickup]]></category>
+		<guid isPermaLink="false">https://tomosta.jp/?p=1722</guid>
+
+					<description><![CDATA[Next.jsは、Vercelというホスティングサービスなどを展開する企業が開発している JavaScriptフレームワークです。
+Reactという JavaScriptライブラリーをベースに開発されていて、大規模なサイト制作やウェブベースのプログラム開発などが可能なフレームワークとして開発されています。
+この講座では、まずは Next.jsのセットアップ方法から簡単なページの制作、公開までの流れを紹介していきましょう。]]></description>
+										<content:encoded><![CDATA[
+<p><a href="https://nextjs.org/" target="_blank" rel="noreferrer noopener">Next.js</a>は、<a href="https://vercel.com/" target="_blank" rel="noreferrer noopener">Vercel</a>というホスティングサービスなどを展開する企業が開発している JavaScriptフレームワークです。</p>
+
+
+
+<p><a rel="noreferrer noopener" href="https://ja.reactjs.org/" target="_blank">React</a>という JavaScriptライブラリーをベースに開発されていて、大規模なサイト制作やウェブベースのプログラム開発などが可能なフレームワークとして開発されています。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1724" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/nextjs-slide-002/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.002.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Nextjs-slide.002" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.002.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.002.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.002.jpeg?resize=1024%2C576&#038;ssl=1" alt="Next.jsとは / Reactベースのフレームワーク / ウェブサイト・ウェブのシステムを作り上げるベース / HTMLを生成して公開もできる" class="wp-image-1724" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.002.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.002.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.002.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.002.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.002.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>この講座では、まずは Next.jsのセットアップ方法から簡単なページの制作、公開までの流れを紹介していきましょう。</p>
+
+
+
+
+
+<h2 id="フレームワークとは">フレームワークとは</h2>
+
+
+
+<p>フレームワーク（Framework）とは、「足場」といった意味の英単語です。Reactは「ライブラリー」と呼ばれ、この場合は各ページから Reactを呼び出して利用する形になりますが、フレームワークの場合はサイトやシステム全体のベースとして、その上でプログラムを構築していくことで、全体を統一されたしくみで構築でき、チーム開発や大規模なシステム開発に威力を発揮します。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1725" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/nextjs-slide-003/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.003.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Nextjs-slide.003" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.003.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.003.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.003.jpeg?resize=1024%2C576&#038;ssl=1" alt="ライブラリーは、各ファイルが読み込んで使う。フレームワークはすべてのファイルのベースになる" class="wp-image-1725" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.003.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.003.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.003.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.003.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.003.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>そのため、逆に小規模なサイト制作などではフレームワークを使うことで、むしろ面倒なことが多くなってしまうこともあり、うまく使い分ける必要があります。</p>
+
+
+
+<p>また、各フレームワークは言語やライブラリーに依存して作られていることが多く、好みの言語と組み合わせて利用します。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1726" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/nextjs-slide-004/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.004.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Nextjs-slide.004" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.004.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.004.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.004.jpeg?resize=1024%2C576&#038;ssl=1" alt="言語とフレームワークの関係。Rubyには Rails、PHPには Laravel、Vue.jsには NuxtJS、Reactには Next.jsなど、言語とフレームワークは組み合わせて使う" class="wp-image-1726" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.004.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.004.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.004.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.004.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.004.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h2 id="next-jsをセットアップしよう">Next.jsをセットアップしよう</h2>
+
+
+
+<h3 id="node-jsをインストールしよう">Node.jsをインストールしよう</h3>
+
+
+
+<p>Next.jsを利用するには、<a href="https://nodejs.org/ja/" target="_blank" rel="noreferrer noopener">Node.js</a>を利用する必要があります。インストールをまだしていない場合は、<a href="https://nodejs.org/ja/" target="_blank" rel="noreferrer noopener">Node.jsの公式サイト</a>からセットアッププログラムをダウンロードしてセットアップしておきましょう。</p>
+
+
+
+<p>ターミナル（macOS）または、PowerShell（Windows）などを起動して、以下のコマンドを入力し、Node.jsが利用できるか確認します。</p>
+
+
+
+<pre class="wp-block-code"><code>npx -v</code></pre>
+
+
+
+<p>これで、バージョン番号が表示されれば利用できます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1741" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-12-7/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-12.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-12" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-12.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-12.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-12.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1741" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-12.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-12.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-12.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-12.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-12.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>「コマンドが見つかりません」などのエラーメッセージが表示される場合は、セットアップが正しく終わっていないため、再度セットアップしてみましょう。</p>
+
+
+
+<h3 id="npxとは">npxとは</h3>
+
+
+
+<p>npxというコマンドは、Node.jsのコマンドを実行するためのコマンドです。例えばここでは「create-next-app」というコマンドを npxを通じて使うことで、Next.jsのプロジェクトを作成することができます。</p>
+
+
+
+<h3 id="next-jsアプリケーションを作成する">Next.jsアプリケーションを作成する</h3>
+
+
+
+<p>それでは、Next.jsのアプリケーションを作成してみましょう。まずは、作業するためのディレクトリーに移動します。例えば、デスクトップなどに「mysite」というディレクトリーを作って、そこにセットアップしてみましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>mkdir mysite
+cd mysite</code></pre>
+
+
+
+<p>そして、Next.jsのプロジェクトを作成します。</p>
+
+
+
+<pre class="wp-block-code"><code>npx create-next-app</code></pre>
+
+
+
+<p>これで、Next.jsがインストールされます。途中、プロジェクトの名前を問われるので、ここでは「next-site」と入力しましょう。新しいディレクトリーが作られて、この中に各ファイルがダウンロードされます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1742" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-13-5/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-13.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-13" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-13.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-13.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-13.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1742" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-13.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-13.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-13.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-13.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-13.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h3 id="next-jsでコピーされるファイル群">Next.jsでコピーされるファイル群</h3>
+
+
+
+<p>Next.jsをインストールすると、次のような各ファイル群が自動的に作成されます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1744" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/nextjs-slide-007-1/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.007-1.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Nextjs-slide.007-1" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.007-1.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.007-1.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.007-1.jpeg?resize=1024%2C576&#038;ssl=1" alt="生成されるファイルの図" class="wp-image-1744" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.007-1.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.007-1.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.007-1.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.007-1.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.007-1.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>このように、Next.jsは各ディレクトリーによって役割が決まっていて、決められた場所に決められたファイル名で保存する必要があります。このような約束事があることで、チームで開発する時などにも共通のルールを自然に決めることができます。</p>
+
+
+
+<h3 id="ビルドしよう">ビルドしよう</h3>
+
+
+
+<p>Next.jsのプロジェクトは、内容を書き換えてもすぐには反映できません。「ビルド」という作業を行なって、HTMLなどを生成しなければなりません。これを行うのが「build」コマンドです。</p>
+
+
+
+<p>作成したプロジェクトのディレクトリーに移動して、次のように入力しましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>cd next-site
+npm run build</code></pre>
+
+
+
+<p>これで、ビルド作業が行われます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1745" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-14-5/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-14.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-14" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-14.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-14.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-14.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1745" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-14.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-14.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-14.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-14.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-14.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>この状態で、対応したウェブサーバーなどにアップロードすれば表示ができるのですが、その前に手元のコンピューターでプレビューをしておきましょう。続けて、次のようなコマンドを打ち込みます。</p>
+
+
+
+<pre class="wp-block-code"><code>npm run start</code></pre>
+
+
+
+<p>すると、次のようなアドレスでウェブブラウザーで確認できます。</p>
+
+
+
+<blockquote class="wp-block-quote"><p><div class="js-wp-oembed-blog-card wp-oembed-blog-card"><a class="js-wp-oembed-blog-card__link" href="http://localhost:3000/" target="_blank">http://localhost:3000/</a></div></p></blockquote>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1746" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-15-5/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-15.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-15" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-15.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-15.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-15.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1746" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-15.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-15.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-15.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-15.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-15.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>こうして、変更→ビルド→プレビューを繰り返しながら開発していきます。とはいえ、少しの変更のたびにビルド作業を行うのは大変です。そこで、このビルドを自動で行える「開発サーバー」を利用すると良いでしょう。</p>
+
+
+
+<p>一旦、プレビューサーバーを終了しましょう。これには、「Ctrl＋C（Win /Macとも）」キーを入力します。</p>
+
+
+
+<h3 id="開発サーバーを起動しよう">開発サーバーを起動しよう</h3>
+
+
+
+<p>開発サーバーは、次のコマンドで実行します。</p>
+
+
+
+<pre class="wp-block-code"><code>npm run dev</code></pre>
+
+
+
+<p>これで同じく、次のアドレスで表示できます。</p>
+
+
+
+<blockquote class="wp-block-quote"><p><div class="js-wp-oembed-blog-card wp-oembed-blog-card"><a class="js-wp-oembed-blog-card__link" href="http://localhost:3000/" target="_blank">http://localhost:3000/</a></div></p></blockquote>
+
+
+
+<p>開発サーバーはビルド作業を行わなくても、変更が常に反映されます。ただし、このままでは公開はできないため、完成したらビルド作業をしてからプレビューで最終確認をし、公開するという作業の流れになります。後ほど実際にやっていきましょう。</p>
+
+
+
+<h2 id="ページを制作しよう">ページを制作しよう</h2>
+
+
+
+<p>それでは、Next.jsでページを制作していきましょう。今は、サンプル用のトップページが表示されているため、これをオリジナルの内容に置き換えましょう。</p>
+
+
+
+<p>次のファイルを開いて、あらかじめ記載されている内容はすべて削除しましょう。</p>
+
+
+
+<blockquote class="wp-block-quote"><p>/pages/index.js</p></blockquote>
+
+
+
+<p>そしたら、代わりに次のように入力します。</p>
+
+
+
+<pre class="wp-block-code"><code>export default function Home() {
+  return (
+    &lt;h1&gt;ともすた&lt;/h1&gt;
+  )
+}</code></pre>
+
+
+
+<p>これで、画面には見出しが表示されます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1747" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-16-4/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-16.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-16" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-16.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-16.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-16.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1747" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-16.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-16.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-16.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-16.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-16.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>先の通り、Next.jsでは画面に表示するファイルを「pages」フォルダーで管理します。そして、「index.js」というファイルが、ウェブサイトのトップページになるという決まりがあります。そのため、トップページを編集したい場合は、「index.js」を編集しましょう。</p>
+
+
+
+<p>記述する内容ですが、HTML 1行以外は、ほぼ Next.js（JavaScript）の決まり文句です。「export default function」とは、記述した内容を他の JavaScriptファイルから読み込めるようにするための記述で、ここでは「Home」という名前をつけて定義しました。この名前はなんでも良いですが、トップページは「Home」としておくと良いでしょう。</p>
+
+
+
+<p>定義の中では「return」の中で HTMLを記述することで、画面に表示する内容を構築することができます。ただ実は、ここに記述されているのは HTML自体ではなく「JSX」という、JavaScript内に HTMLを構築するための独自言語です。HTMLとは、少し違う部分があるため、気をつけて書き換えなければなりません。</p>
+
+
+
+<h3 id="1つの要素にまとめよう">1つの要素にまとめよう</h3>
+
+
+
+<p>JSXでは、要素を1つしか返すことができません。次のように、h1と pを返そうとするとエラーになってしまいます。</p>
+
+
+
+<pre class="wp-block-code"><code>return (
+  &lt;h1&gt;ともすた&lt;/h1&gt;
+  &lt;p&gt;学ぶ。をちゃんと&lt;/p&gt;
+)</code></pre>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1748" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-17-4/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-17.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-17" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-17.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-17.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-17.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1748" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-17.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-17.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-17.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-17.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-17.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>そこで、全体を divタグなどで囲ってあげる必要があります。</p>
+
+
+
+<pre class="wp-block-code"><code>return (
+  &lt;div&gt;
+    &lt;h1&gt;ともすた&lt;/h1&gt;
+    &lt;p&gt;学ぶ。をちゃんと&lt;/p&gt;
+  &lt;/div&gt;
+)</code></pre>
+
+
+
+<p>ただし、このようにすると無用な div要素が追加されてしまいます。そこで、JSXでは次のような記述が利用できます。</p>
+
+
+
+<pre class="wp-block-code"><code>return (
+  &lt;&gt;
+    &lt;h1&gt;ともすた&lt;/h1&gt;
+    &lt;p&gt;学ぶ。をちゃんと&lt;/p&gt;
+  &lt;/&gt;
+)</code></pre>
+
+
+
+<p>これで、1つの要素にまとめながら、無用な要素を生成しないようにできます。</p>
+
+
+
+<h3 id="class属性は-classnameに">class属性は classNameに</h3>
+
+
+
+<p></p>
+
+
+
+<p>class属性はそのまま利用できないため、「className」という記述に変更します（Nは大文字なので気をつけましょう）。これは、JavaScriptに「class」という記述が使われている（予約語と言います）ためです。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;h1 class="mytitle"&gt;ともすた&lt;/h1&gt;
+↓
+&lt;h1 className="mytitle"&gt;ともすた&lt;h1&gt;</code></pre>
+
+
+
+<h3 id="インラインスタイルシートが利用できない">インラインスタイルシートが利用できない</h3>
+
+
+
+<p>タグの中で直接 CSSを記述する、styleタグもそのままでは利用できません。次のように書き方がかなり変わります。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;h1 style="color: red"&gt;ともすた&lt;/h1&gt;
+↓
+&lt;h1 style={{color: `red`}}"&gt;ともすた&lt;/h1&gt;</code></pre>
+
+
+
+<p>その他にも、for属性が使えない（htmlForに書き換える必要があります）など、いくつかクセがあるため、都度紹介していきましょう。</p>
+
+
+
+<h2 id="cssの書き方">CSSの書き方</h2>
+
+
+
+<p>Next.jsや JSXではインラインの CSSの書き方が違っていたように、その他の CSSの書き方にも特徴があります。それぞれ紹介しましょう。</p>
+
+
+
+<h3 id="インラインでcssを書く">インラインでCSSを書く</h3>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1749" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/nextjs-slide-013/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.013.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Nextjs-slide.013" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.013.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.013.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.013.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1749" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.013.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.013.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.013.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.013.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.013.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>インラインCSSは先の通り、書き方が少し変わったほか「ハイフンが使えない」という特徴があります。例えば、次のような HTMLを考えましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;h1 style="background-color: red"&gt;見出し&lt;/h1&gt;</code></pre>
+
+
+
+<p>このようなハイフンで区切られたプロパティの場合は「キャメル式」という方法で書き換える必要があります。これは、ハイフン直後のアルファベットを大文字にしてくっつけます。次のようになります。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;h1 style={{backgroundColor: `red`}}&gt;見出し&lt;/h1&gt;</code></pre>
+
+
+
+<p>「color」の cが大文字になり、ハイフンを取り除いてくっつけます。このほか、「borderBottom」「marginTop」などハイフン区切りのプロパティには注意しましょう。</p>
+
+
+
+<h3 id="内部参照">内部参照</h3>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1750" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/nextjs-slide-014/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.014.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Nextjs-slide.014" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.014.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.014.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.014.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1750" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.014.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.014.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.014.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.014.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.014.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>内部参照で CSSを記述する場合も注意が必要です。基本的には「style」タグがそのまま使えますが、少し書き加える必要があります。例えば、次のような CSSを記述してみましょう。「&lt;/&gt;」の直前に追加します。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;style&gt;
+  h1 {
+    color: #fff;
+  }
+&lt;/style&gt;</code></pre>
+
+
+
+<p>ここに、次のようにそれぞれ書き加えます。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;style jsx&gt;{`<code>  h1 {
+    color: #fff;
+  }}</code>`}&lt;/style&gt;</code></pre>
+
+
+
+<p>タグの最後に「jsx」という記述が増えたほか、全体を波かっことバッククオートで囲っています。これで、内部参照の CSSとして機能させることができます。CSSの記述は通常通りで、ハイフン区切りのプロパティなどもそのまま記述できるので便利でしょう。</p>
+
+
+
+<h3 id="外部参照-cssモジュール">外部参照（CSSモジュール）</h3>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1751" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/nextjs-slide-015/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.015.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Nextjs-slide.015" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.015.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.015.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.015.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1751" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.015.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.015.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.015.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.015.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.015.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>Next.jsでは外部参照の書き方もかなり独特です。CSSファイルは、あらかじめ準備されている「styles」フォルダーに準備しましょう。またここでは、ファイル名を「.module.css」にする必要があります。次のようなファイルを「/styles/home.module.css」として作成しましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>.mytitle {
+  font-size: 5em;
+}</code></pre>
+
+
+
+<p>そして、使いたいファイルから読み込みます。「/pages/index.js」に次のように追加します。</p>
+
+
+
+<pre class="wp-block-code"><code>import Styles from '../styles/home.module.css'</code></pre>
+
+
+
+<p>そしたら、次のようにしてクラスを利用できます。通常の class属性としては使えないので気をつけましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;h1 className={Styles.mytitle}&gt;Title&lt;/h1&gt;</code></pre>
+
+
+
+<p>これで、スタイルが適用されます。</p>
+
+
+
+<h3 id="id-クラスセレクター以外が使えないので注意">ID/クラスセレクター以外が使えないので注意</h3>
+
+
+
+<p>「.module.css」ファイルでは、セレクターにタグ名を使うセレクターなどは使えず、IDセレクターやクラスセレクターなどにする必要があります。要素セレクターなどを使う場合は、この後の「グローバルな CSS」を利用します。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1752" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-18-4/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-18.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-18" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-18.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-18.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-18.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1752" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-18.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-18.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-18.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-18.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-18.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h3 id="グローバルcssを利用する">グローバルCSSを利用する</h3>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1753" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/nextjs-slide-016/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.016.jpeg?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Nextjs-slide.016" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.016.jpeg?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.016.jpeg?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.016.jpeg?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1753" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.016.jpeg?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.016.jpeg?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.016.jpeg?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.016.jpeg?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/Nextjs-slide.016.jpeg?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>もっとも通常の CSSと同じように使えるのが、グローバルCSSです。次のように「/styles/mysite.css」というファイルを作成しましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>body {
+  color: red;
+}</code></pre>
+
+
+
+<p>このファイルは、通常の CSSとして記述できます。ただし、各ページから読み込むことはできず、すべてのファイルに適用される「/pages/_app.js」で次のようにして読み込みます。</p>
+
+
+
+<pre class="wp-block-code"><code>import '../styles/styles.css'</code></pre>
+
+
+
+<p>これで、すべてのファイルに適用される CSSを記述できます。</p>
+
+
+
+<h2 id="ページを増やそう">ページを増やそう</h2>
+
+
+
+<p>Next.jsでページを増やしたい場合は、「/pages」フォルダーの中にパスに合わせたディレクトリーやファイルを作成します。例えばここでは、「/about」でアクセスできるページを作成しましょう。「about」ディレクトリーを作成します。</p>
+
+
+
+<p>そしたら、index.jsには次のように記述しましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>export default function About() {
+  return (
+    &lt;&gt;
+    &lt;h1&gt;About&lt;/h1&gt;
+    &lt;/&gt;
+  )
+}</code></pre>
+
+
+
+<p>これでファイルを保存すると、次のようなパスでアクセスできるようになります。</p>
+
+
+
+<pre class="wp-block-code"><code>https:&#47;&#47;localhost:3000/about/</code></pre>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1754" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-19-4/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-19.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-19" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-19.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-19.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-19.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1754" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-19.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-19.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-19.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-19.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-19.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h3 id="リンクを張ろう">リンクを張ろう</h3>
+
+
+
+<p>Next.jsでリンクを張る場合は、通常の a要素を使うよりも「Linkコンポーネント」を利用した方が、後々便利です。</p>
+
+
+
+<p>まずは、Linkコンポーネントをインポートします。</p>
+
+
+
+<pre class="wp-block-code"><code>import Link from 'next/link'</code></pre>
+
+
+
+<p>そして、「Link」という要素を作成しましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;Link href={`/`}&gt;&lt;a&gt;トップへ&lt;/a&gt;&lt;/Link&gt;</code></pre>
+
+
+
+<p>これで a要素が出力されます。空の a要素があることに気をつけましょう。ここには、「どのような要素でリンクを作りたいか」を指定します。例えば、button要素で作りたい場合は次のように記述します。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;Link href={`/`}&gt;&lt;button&gt;トップへ&lt;/button&gt;&lt;/Link&gt;</code></pre>
+
+
+
+<p>実際にボタンが表示され、クリックするとページが遷移するという動きも自動的に作られます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1755" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-20-4/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-20.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-20" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-20.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-20.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-20.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1755" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-20.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-20.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-20.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-20.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-20.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h2 id="オリジナルコンポーネントを作ろう">オリジナルコンポーネントを作ろう</h2>
+
+
+
+<p>コンポーネントは、自分で作成することもできます。ウェブサイトで共通して使うヘッダーやナビゲーションなどをコンポーネント化しておけば、一元管理ができて便利でしょう。まずは、「/pages」にコンポーネントを作成します。管理用にディレクトリーを作っておくと良いでしょう。「/pages/components/header.js」というファイルを作って、次のように書き込みます。</p>
+
+
+
+<pre class="wp-block-code"><code>export default function Header(props) {
+    return (
+        &lt;h1&gt;{props.title}&lt;/h1&gt;
+    )
+}</code></pre>
+
+
+
+<p>そしたら、このコンポーネントを使いたいファイル（/pages/index.js）で次のように取り込みましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>import Header from './components/header'</code></pre>
+
+
+
+<p>これで「Header」が利用できるようになります。またこの時、次のように属性のようにパラメーターを渡すことができます。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;Header title={`ともすた`}&gt;&lt;/Header&gt;</code></pre>
+
+
+
+<p>渡されたパラメーターは、「props」というオブジェクトで取得され、次のようにしてコンポーネント内で利用できます。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;h1&gt;{props.title}&lt;/h1&gt;</code></pre>
+
+
+
+<h2 id="レイアウトを使おう">レイアウトを使おう</h2>
+
+
+
+<p>コンポーネントと似たもので、ヘッダーやフッターなどページ全体の共通パーツを扱える「レイアウト」というものも利用できます。次のようなファイルを「/pages/components/content.js」に作成しましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>export default function Content({ children }) {
+    return (
+      &lt;&gt;
+      &lt;div className="container"&gt;
+        { children }
+       &lt;/div&gt;
+       &lt;hr /&gt;
+       &lt;footer&gt;©︎ 2021 ともすた&lt;/footer&gt;
+       &lt;/&gt;
+    )
+}</code></pre>
+
+
+
+<p>ポイントは「{children}」という記述です。ここに、実際のコンテンツの内容を入れ込むことができます。レイアウトを使う場合は、次のようにして読み込んで、全体を囲うように要素を使います。</p>
+
+
+
+<pre class="wp-block-code"><code>import Content from './components/content'
+
+return (
+  &lt;Content&gt;
+    ...
+  &lt;/Content&gt;
+)</code></pre>
+
+
+
+<p>これで、要素の中に記述した内容が差し込まれます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1728" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-50/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1728" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h2 id="swrで-jsonデータを取得しよう">SWRで JSONデータを取得しよう</h2>
+
+
+
+<p>Next.jsが真価を発揮するのは、外部のデータとやりとりをしながらダイナミックなウェブシステムを制作する時です。Next.jsでは、いくつかの方法で外部データとやりとりができますが、SWRというモジュールを使うと簡単なので、ここではこのやり方を紹介しましょう。</p>
+
+
+
+<h3 id="jsonデータを準備しよう">JSONデータを準備しよう</h3>
+
+
+
+<p>Next.jsのプロジェクトでは、あらかじめ次の場所に JSONのサンプルが準備されています。次のアドレスを表示してみましょう。</p>
+
+
+
+<blockquote class="wp-block-quote"><p><div class="js-wp-oembed-blog-card wp-oembed-blog-card"><a class="js-wp-oembed-blog-card__link" href="http://localhost:3000/api/hello" target="_blank">http://localhost:3000/api/hello</a></div></p></blockquote>
+
+
+
+<p>すると、次のように JSONデータが表示されます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1730" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-1-14/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-1.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-1" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-1.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-1.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-1.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1730" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-1.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-1.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-1.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-1.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-1.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>これは、「/pages/api/hello.js」というファイルで出力されています。これを次のような内容に変更して、ファイル名を「message.js」に変えておきましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>export default function handler(req, res) {
+  res.status(200).json({
+    message: "学ぶ。をちゃんと"
+  })
+}</code></pre>
+
+
+
+<h3 id="swrをインストールしよう">SWRをインストールしよう</h3>
+
+
+
+<p>SWRは標準では利用できないので、ターミナルから次のコマンドでインストールしましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>npm install swr --save-dev</code></pre>
+
+
+
+<p>そしたら、「/pages/index.js」でこれを取り込みます。</p>
+
+
+
+<pre class="wp-block-code"><code>import useSWR from 'swr'</code></pre>
+
+
+
+<p>そして、プログラムの冒頭で次のようなプログラムを作成します。</p>
+
+
+
+<pre class="wp-block-code"><code>let title = 'ともすた'
+
+// ここから追加
+const {data, error} = useSWR('/api/message')
+if (error) return &lt;div&gt;failed to load&lt;/div&gt;
+if (!data) return &lt;div&gt;loading...&lt;/div&gt;
+
+&lt;p&gt;{data.message}&lt;/p&gt;</code></pre>
+
+
+
+<p>追加した if構文は、JSONが正しく返ってこなかった場合や、通信が終わっていない時などに画面上にエラーメッセージを表示して処理を終了するためのものです。メッセージの内容は変えることができます。</p>
+
+
+
+<p>こうすると、メッセージ部分が JSONからのデータに変更されました。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1731" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-2-12/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-2.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-2" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-2.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-2.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-2.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1731" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-2.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-2.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-2.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-2.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-2.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>JSONを変更すれば、メッセージの内容も書き換わるようになります。</p>
+
+
+
+<h2 id="vercelにデプロイ-公開-しよう">Vercelにデプロイ（公開）しよう</h2>
+
+
+
+<p>Next.jsで作成したプログラムは、Node.jsに対応したウェブサーバーで動作させることができます。また、エクスポートを使えば、HTMLファイルとしてレンタルサーバーなどにアップロードする必要があります（ただし、SWRを使ったプログラムなどの場合は工夫が必要なので、今回の記事のプログラムは動作しません）。</p>
+
+
+
+<p>ここでは、Next.jsの開発元が運用している「Vercel」というサーバーにアップロードして公開してみましょう。個人利用であれば無償のプランもあります。</p>
+
+
+
+<h3 id="vercelと-githubを連携しよう">Vercelと GitHubを連携しよう</h3>
+
+
+
+<p>Vercelにアカウントを作成しますが、GitHubのアカウントがあれば連携させることができます。GitLabや Bitbucketでも連携可能で、メールアドレスなどでも作成できます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1732" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-3-10/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-3.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-3" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-3.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-3.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-3.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1732" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-3.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-3.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-3.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-3.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-3.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>GitHubと連携すると、GitHubのリポジトリーが表示されるようになります。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1733" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-4-8/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-4.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-4" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-4.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-4.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-4.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1733" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-4.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-4.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-4.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-4.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-4.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>これで連携完了です。</p>
+
+
+
+<h3 id="githubにリポジトリーを作ろう">GitHubにリポジトリーを作ろう</h3>
+
+
+
+<p>続いて、Vercelに公開するための GitHubリポジトリーを作成します。適当な名前のリポジトリーを作成しましょう。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1734" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-5-9/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-5.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-5" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-5.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-5.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-5.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1734" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-5.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-5.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-5.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-5.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-5.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>そしたら、このリポジトリーにコミット・プッシュを行いましょう。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1735" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-6-7/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-6.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-6" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-6.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-6.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-6.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1735" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-6.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-6.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-6.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-6.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-6.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>これでデプロイの準備が完了です。</p>
+
+
+
+<h3 id="vercelで取り込もう">Vercelで取り込もう</h3>
+
+
+
+<p>この状態で Vercelに戻ると、今作成したリポジトリーが表示されます。「Import」ボタンをクリックしましょう。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1736" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-7-7/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-7.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-7" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-7.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-7.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-7.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1736" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-7.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-7.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-7.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-7.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-7.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>チームで制作するかの選択や、プロジェクト名などを設定したら「Deploy」ボタンをクリックします。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1737" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-8-7/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-8.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-8" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-8.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-8.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-8.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1737" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-8.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-8.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-8.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-8.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-8.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>これで、Vercel上でビルド作業が始まり、公開手続きが行われます。ビルドに失敗するとエラーメッセージが表示されるため、エラーを取り除いて再度プッシュし、Deployボタンをクリックしましょう。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1738" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-9-7/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-9.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-9" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-9.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-9.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-9.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1738" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-9.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-9.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-9.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-9.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-9.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>正しくビルドが行われると、完了画面が表示されます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1739" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-10-7/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-10.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-10" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-10.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-10.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-10.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1739" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-10.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-10.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-10.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-10.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-10.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>「Visit」ボタンをクリックすると、実際にサイトを確認できます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1740" data-permalink="https://tomosta.jp/article/nextjs-basic/attachment/image-11-7/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-11.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-11" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-11.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-11.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-11.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1740" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-11.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-11.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-11.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-11.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/07/image-11.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<p>現在は、vercel.appという仮ドメインですが、実際のドメイン名を割り当てることなども可能です。</p>
+
+
+
+<p>Next.jsを利用すれば、本格的なウェブサイトを開発することができます。まだまだ奥が深いので、本サイトでも引き続き Next.jsを使った記事を今後更新していく予定です。</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">1722</post-id>	</item>
+		<item>
+		<title>Cookieを特定のサイトのものだけ削除する方法</title>
+		<link>https://tomosta.jp/blog/clear-cookie/</link>
+		
+		<dc:creator><![CDATA[たにぐち　まこと]]></dc:creator>
+		<pubDate>Thu, 17 Jun 2021 07:10:53 +0000</pubDate>
+				<category><![CDATA[ブログ]]></category>
+		<guid isPermaLink="false">https://tomosta.jp/?p=1700</guid>
+
+					<description><![CDATA[ウェブサイトを開発していると、Cookieの値のせいで管理画面などにアクセスができなくなったり、正常に操作が行えなくなってしまうことがあります。 そんな時、Cookieを削除すると戻るのですが、この時ウェブブラウザーの機 [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>ウェブサイトを開発していると、Cookieの値のせいで管理画面などにアクセスができなくなったり、正常に操作が行えなくなってしまうことがあります。</p>
+
+
+
+<p>そんな時、Cookieを削除すると戻るのですが、この時ウェブブラウザーの機能で Cookieを削除しようとすると、それ以外の日常的に利用しているウェブサイトからもログアウトされてしまうなど、面倒な状況になったりします。</p>
+
+
+
+<p>そんな時は、「開発者ツール」を使うと特定のサイトの Cookieだけを簡単に削除できます。ここでは、Google Chromeを利用して解説しますが、Safariや Edgeなど Chromium系のブラウザーであれば同様の操作で利用できます。</p>
+
+
+
+<h2>開発者ツールを起動しよう</h2>
+
+
+
+<p>まずは、Cookieを削除したいウェブサイトを開いた状態で、Chromeの場合は画面右上の「・・・」のボタンをクリックし、「その他のツール→デベロッパーツール」をクリックします。画面の下や右に開発者ツールが表示されるので、「Application」タブの「Cookies」から、該当のウェブサイトのドメイン名をクリックしましょう。</p>
+
+
+
+<p>左側に、現在の Cookieの内容が表示されます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1701" data-permalink="https://tomosta.jp/blog/clear-cookie/attachment/image-49/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-49.png?fit=1185%2C796&amp;ssl=1" data-orig-size="1185,796" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-49" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-49.png?fit=300%2C202&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-49.png?fit=1024%2C688&amp;ssl=1" loading="lazy" width="1024" height="688" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-49.png?resize=1024%2C688&#038;ssl=1" alt="" class="wp-image-1701" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-49.png?resize=1024%2C688&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-49.png?resize=300%2C202&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-49.png?resize=768%2C516&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-49.png?w=1185&amp;ssl=1 1185w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /></figure>
+
+
+
+<h2>Cookieの値を削除しよう</h2>
+
+
+
+<p>あとは、ここから削除したい値を選んで、Deleteキーを押せば削除できます。どれが原因かわからない場合は、すべてを削除してしまって良いでしょう。この状態で、ページを再読み込みしてみましょう。これで Cookieをなくした状態でアクセスできます。</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">1700</post-id>	</item>
+		<item>
+		<title>MAMPで PHPのエラーを表示する方法</title>
+		<link>https://tomosta.jp/blog/mamp-display-errors/</link>
+		
+		<dc:creator><![CDATA[たにぐち　まこと]]></dc:creator>
+		<pubDate>Tue, 08 Jun 2021 11:56:25 +0000</pubDate>
+				<category><![CDATA[ブログ]]></category>
+		<guid isPermaLink="false">https://tomosta.jp/?p=1091</guid>
+
+					<description><![CDATA[MAMPを使って PHPの開発をしているとき、PHPを書き間違えた時に次のような画面になってしまうことがあります（Google Chromeの場合）。 これは、PHPがエラーを出しているのに画面表示が OFFになっていて [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>MAMPを使って PHPの開発をしているとき、PHPを書き間違えた時に次のような画面になってしまうことがあります（Google Chromeの場合）。</p>
+
+
+<div class="u-aligncenter-wrapper">
+<div class="wp-block-image"><figure class="size-large"><img data-attachment-id="1580" data-permalink="https://tomosta.jp/blog/mamp-display-errors/attachment/image-6-6/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-6.png?fit=677%2C345&amp;ssl=1" data-orig-size="677,345" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-6" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-6.png?fit=300%2C153&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-6.png?fit=677%2C345&amp;ssl=1" loading="lazy" width="677" height="345" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-6.png?resize=677%2C345&#038;ssl=1" alt="" class="wp-image-1580" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-6.png?w=677&amp;ssl=1 677w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-6.png?resize=300%2C153&amp;ssl=1 300w" sizes="(max-width: 677px) 100vw, 677px" data-recalc-dims="1" /></figure></div>
+</div>
+
+
+<p>これは、PHPがエラーを出しているのに画面表示が OFFになっていて、表示されていないためです。ここでは、エラーメッセージを表示できるように設定をしてみましょう。</p>
+
+
+
+<h2>MAMP for Macの場合</h2>
+
+
+
+<h3>php.iniの場所を調べよう</h3>
+
+
+
+<p>まずは MAMPを起動して「Start」ボタンをクリックしてサーバーを起動します。続いて「WebStart」ボタンをクリックして、ブラウザーでトップページを表示しましょう。</p>
+
+
+<div class="u-aligncenter-wrapper">
+<div class="wp-block-image"><figure class="size-large"><img data-attachment-id="1581" data-permalink="https://tomosta.jp/blog/mamp-display-errors/attachment/image-7-6/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-7.png?fit=536%2C434&amp;ssl=1" data-orig-size="536,434" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-7" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-7.png?fit=300%2C243&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-7.png?fit=536%2C434&amp;ssl=1" loading="lazy" width="536" height="434" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-7.png?resize=536%2C434&#038;ssl=1" alt="" class="wp-image-1581" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-7.png?w=536&amp;ssl=1 536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-7.png?resize=300%2C243&amp;ssl=1 300w" sizes="(max-width: 536px) 100vw, 536px" data-recalc-dims="1" /><figcaption>MAMP for Mac</figcaption></figure></div>
+</div>
+
+<div class="u-aligncenter-wrapper">
+<div class="wp-block-image"><figure class="size-large"><img data-attachment-id="1583" data-permalink="https://tomosta.jp/blog/mamp-display-errors/attachment/image-9-6/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-9.png?fit=485%2C441&amp;ssl=1" data-orig-size="485,441" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-9" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-9.png?fit=300%2C273&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-9.png?fit=485%2C441&amp;ssl=1" loading="lazy" width="485" height="441" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-9.png?resize=485%2C441&#038;ssl=1" alt="" class="wp-image-1583" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-9.png?w=485&amp;ssl=1 485w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-9.png?resize=300%2C273&amp;ssl=1 300w" sizes="(max-width: 485px) 100vw, 485px" data-recalc-dims="1" /><figcaption>MAMP for Windows</figcaption></figure></div>
+</div>
+
+
+<p>Toolsメニューに「phpInfo」があるので、これをクリックすると PHPの各種情報が表示されます。</p>
+
+
+<div class="u-aligncenter-wrapper">
+<div class="wp-block-image"><figure class="size-large"><img data-attachment-id="1092" data-permalink="https://tomosta.jp/blog/mamp-display-errors/attachment/image-3-6/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-3.png?fit=471%2C289&amp;ssl=1" data-orig-size="471,289" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-3" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-3.png?fit=300%2C184&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-3.png?fit=471%2C289&amp;ssl=1" loading="lazy" width="471" height="289" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-3.png?resize=471%2C289&#038;ssl=1" alt="" class="wp-image-1092" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-3.png?w=471&amp;ssl=1 471w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-3.png?resize=300%2C184&amp;ssl=1 300w" sizes="(max-width: 471px) 100vw, 471px" data-recalc-dims="1" /></figure></div>
+</div>
+
+<div class="u-aligncenter-wrapper">
+<div class="wp-block-image"><figure class="size-large"><img data-attachment-id="1093" data-permalink="https://tomosta.jp/blog/mamp-display-errors/attachment/image-4-4/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-4.png?fit=821%2C678&amp;ssl=1" data-orig-size="821,678" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-4" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-4.png?fit=300%2C248&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-4.png?fit=821%2C678&amp;ssl=1" loading="lazy" width="821" height="678" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-4.png?resize=821%2C678&#038;ssl=1" alt="" class="wp-image-1093" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-4.png?w=821&amp;ssl=1 821w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-4.png?resize=300%2C248&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-4.png?resize=768%2C634&amp;ssl=1 768w" sizes="(max-width: 821px) 100vw, 821px" data-recalc-dims="1" /></figure></div>
+</div>
+
+
+<p>そしたら、ウェブブラウザーの検索機能などを使って「php.ini」というキーワードを検索しましょう。パスが表示されます。</p>
+
+
+<div class="u-aligncenter-wrapper">
+<div class="wp-block-image"><figure class="size-large"><img data-attachment-id="1094" data-permalink="https://tomosta.jp/blog/mamp-display-errors/attachment/image-5-5/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-5.png?fit=660%2C127&amp;ssl=1" data-orig-size="660,127" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-5" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-5.png?fit=300%2C58&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-5.png?fit=660%2C127&amp;ssl=1" loading="lazy" width="660" height="127" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-5.png?resize=660%2C127&#038;ssl=1" alt="" class="wp-image-1094" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-5.png?w=660&amp;ssl=1 660w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/01/image-5.png?resize=300%2C58&amp;ssl=1 300w" sizes="(max-width: 660px) 100vw, 660px" data-recalc-dims="1" /></figure></div>
+</div>
+
+
+<p>これが編集すべき php.iniファイルになります。このファイルをエディターで開きましょう。</p>
+
+
+
+<h2>display_errorsを onに設定する</h2>
+
+
+
+<p>ファイル内に、以下の記述があるのを検索します。エディターの検索機能を利用すると良いでしょう。先頭に「;」が付いている行はコメントなので、気をつけて探しましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>display_errors = Off</code></pre>
+
+
+
+<p>この、「Off」の値を「On」に変更してファイルを保存します。</p>
+
+
+
+<pre class="wp-block-code"><code>display_errors = On</code></pre>
+
+
+
+<p>あとは、MAMPを一度終了してから再起動してブラウザーを再読み込みしてみてください。次のようにエラーメッセージが表示されるようになります。</p>
+
+
+<div class="u-aligncenter-wrapper">
+<div class="wp-block-image"><figure class="size-large"><img data-attachment-id="1584" data-permalink="https://tomosta.jp/blog/mamp-display-errors/attachment/image-10-6/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-10.png?fit=848%2C74&amp;ssl=1" data-orig-size="848,74" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-10" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-10.png?fit=300%2C26&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-10.png?fit=848%2C74&amp;ssl=1" loading="lazy" width="848" height="74" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-10.png?resize=848%2C74&#038;ssl=1" alt="" class="wp-image-1584" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-10.png?w=848&amp;ssl=1 848w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-10.png?resize=300%2C26&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/06/image-10.png?resize=768%2C67&amp;ssl=1 768w" sizes="(max-width: 848px) 100vw, 848px" data-recalc-dims="1" /></figure></div>
+</div>]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">1091</post-id>	</item>
+		<item>
+		<title>MAG2NEWSにメルマガが紹介されました</title>
+		<link>https://tomosta.jp/news/20210529/</link>
+		
+		<dc:creator><![CDATA[たにぐち　まこと]]></dc:creator>
+		<pubDate>Fri, 28 May 2021 22:48:49 +0000</pubDate>
+				<category><![CDATA[お知らせ]]></category>
+		<guid isPermaLink="false">https://tomosta.jp/?p=1457</guid>
+
+					<description><![CDATA[まぐまぐ！が運営するメディアサイト『MAG2NEWS』に、ともすたが発行する有料メールマガジン『たにぐちまことのプログラミングと起業のことば辞典』が取り上げられました。]]></description>
+										<content:encoded><![CDATA[
+<p><a href="https://www.mag2.com/">まぐまぐ！</a>が運営するメディアサイト『<a href="https://www.mag2.com/p/news/">MAG2NEWS</a>』に、ともすたが発行する有料メールマガジン『<a rel="noreferrer noopener" href="https://i.mag2.jp/r?aid=a609897a21fd86" target="_blank">たにぐちまことのプログラミングと起業のことば辞典</a>』が取り上げられました。</p>
+
+
+
+<p>記事では、実際にメールマガジンで発行した「貸借対照表」と「キャッシュフロー計算書」について、実際の内容も掲載いただいています。</p>
+
+
+
+<p>ぜひ、実際の内容もご確認いただければ幸いです。</p>
+
+
+
+<ul><li><a href="https://www.mag2.com/p/news/496615">現代の必修科目「プログラミングと経営」の基本知識をイチから手軽に学ぶ方法を説明してみる</a></li></ul>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">1457</post-id>	</item>
+		<item>
+		<title>プログラミング学習に Macを選ぶならこれ！ 2021年版</title>
+		<link>https://tomosta.jp/blog/best-by-mac-2021/</link>
+		
+		<dc:creator><![CDATA[たにぐち　まこと]]></dc:creator>
+		<pubDate>Wed, 28 Apr 2021 01:08:09 +0000</pubDate>
+				<category><![CDATA[ブログ]]></category>
+		<category><![CDATA[pickup]]></category>
+		<guid isPermaLink="false">https://tomosta.jp/?p=1239</guid>
+
+					<description><![CDATA[プログラミングの学習に Macを購入しようなんていう方もいるかも知れません。現在 Macはデスクトップ型とノート型合わせて、さまざまな種類が販売されています。
+
+この中でプログラミング学習には、どんな Macを購入したら良いのでしょう？　いくつかポイントを紹介しましょう。]]></description>
+										<content:encoded><![CDATA[
+<p>プログラミングの学習に Macを購入しようなんていう方もいるかも知れません。現在 Macはデスクトップ型とノート型合わせて、さまざまな種類が販売されています。</p>
+
+
+
+<p>この中でプログラミング学習には、どんな Macを購入したら良いのでしょう？　いくつかポイントを紹介しましょう。</p>
+
+
+
+<h2 id="デスクトップ型よりもノート型">デスクトップ型よりもノート型</h2>
+
+
+
+<p>現在 Macには、iMac / Mac Pro / Mac miniというデスクトップ型と、MacBook Air / MacBook Proというノート型があります。</p>
+
+
+
+<p>デスクトップ型は、性能が高く拡張性が高い代わりに、当然ながら持ち歩きができません。ノート型は性能や拡張性を求めることができません。</p>
+
+
+
+<p>とはいえ、特にプログラミングにおいてはノート型が圧倒的におすすめです。どこでも勉強や仕事ができる利点はもちろん、自宅でじっくり作業をしたいときは、外付けディスプレイに接続をすれば、デスクトップ型と変わらないような環境で作業ができます。</p>
+
+
+
+<p>動画編集や 3Dゲーム、グラフィックなどをする場合は性能が必要なこともありますが、それらを普段必要としない場合はノート型で十分な性能を持っています。ノート型がおすすめできます。</p>
+
+
+
+<h2 id="ディスプレイサイズは-13inch">ディスプレイサイズは 13inch</h2>
+
+
+
+<p>MacBook Proには、「13インチMacBook Pro」と「16インチMacBook Pro」の2種類があります。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1240" data-permalink="https://tomosta.jp/blog/best-by-mac-2021/attachment/image-31/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1240" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /><figcaption>13inch MacBook Pro</figcaption></figure>
+
+
+
+<p>これは、ディスプレイのサイズを表したもので、ノート型の場合は同時に本体サイズ自体がその分大きくなります。また、性能も 16インチの方が高く、AMD Radeon Proというグラフィック性能なども高いプロセッサーが搭載されています。</p>
+
+
+
+<p>ただしその分費用も高くなるため、大きくて高性能なマシンが必要ない場合は 13インチで充分でしょう。先の通り、外付けディスプレイを使えば、自分の好きな大きさのディスプレイで作業ができるため、持ち歩くときのことを考えれば 13インチで十分と言えます。</p>
+
+
+
+<p>なお、MacBook Airは 13インチのみとなります。</p>
+
+
+
+<h2 id="未来を見据えた-m1プロセッサーか-確実性の-intelか">未来を見据えた M1プロセッサーか、確実性の Intelか</h2>
+
+
+
+<p>13インチMacBook Proは、2021年現在大きく分けて「Apple M1プロセッサー」というプロセッサーと「Intel Core i5」というプロセッサーで選ぶことができます。</p>
+
+
+
+<p>これまで、Macは Intel製のプロセッサーを採用してきましたが、2020年に開発された M1プロセッサーというものが、MacBook Proと、Mac miniに先行して搭載されています。</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="1241" data-permalink="https://tomosta.jp/blog/best-by-mac-2021/attachment/image-1-11/" data-orig-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image-1.png?fit=1920%2C1080&amp;ssl=1" data-orig-size="1920,1080" data-comments-opened="0" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="image-1" data-image-description="" data-image-caption="" data-medium-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image-1.png?fit=300%2C169&amp;ssl=1" data-large-file="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image-1.png?fit=1024%2C576&amp;ssl=1" loading="lazy" width="1024" height="576" src="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image-1.png?resize=1024%2C576&#038;ssl=1" alt="" class="wp-image-1241" srcset="https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image-1.png?resize=1024%2C576&amp;ssl=1 1024w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image-1.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image-1.png?resize=768%2C432&amp;ssl=1 768w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image-1.png?resize=1536%2C864&amp;ssl=1 1536w, https://i0.wp.com/tomosta.jp/wp-content/uploads/2021/04/image-1.png?w=1920&amp;ssl=1 1920w" sizes="(max-width: 1024px) 100vw, 1024px" data-recalc-dims="1" /><figcaption>Apple M1チップを搭載した MacBook Pro</figcaption></figure>
+
+
+
+<p>M1の場合、動作速度が速かったりバッテリーが長時間持つなどのメリットがありますが、まだ M1プロセッサーに対応していないソフトや周辺機器があるため、利用できない場合や動作速度が極端に遅くなるなど、若干発展途上な側面があります。</p>
+
+
+
+<p>特にプログラミングにおいては、それ以前に書かれた書籍や収録された動画教材などで、M1プロセッサーで検証されていないものなどが動作しないことがあり、少し心配が残ります。</p>
+
+
+
+<p>そこで、例えば新品で手に入れるなら M1プロセッサーを、または中古の Intel MacBook Pro / Airを購入するという選択肢が良いかも知れません。</p>
+
+
+
+<h2 id="軽さの-macbook-air-長く使える-macbook-pro">軽さの MacBook Air、長く使える MacBook Pro</h2>
+
+
+
+<p>最後に、Airにするか、Proにするかの選択ですが、これについては好みで選んで良いでしょう。価格帯も違いますし、本体の重さも Airは軽くなります。多少性能に目をつぶって、安さと軽さを選ぶか、多少長く使えるように Proを選ぶかの選択になります。</p>
+
+
+
+<h2 id="メモリーは-16gbに増設しよう-ストレージは財布と相談">メモリーは 16GBに増設しよう、ストレージは財布と相談</h2>
+
+
+
+<p>最後にカスタマイズです。Apple Storeで購入する場合、メモリ容量やストレージ容量をカスタマイズして購入できます。</p>
+
+
+
+<p>特にメモリーについては、標準は 8GBなので多数のソフト、特に Google Chromeなどはメモリをかなり使うため、物足りなくなることが考えられます。</p>
+
+
+
+<p>そこで、余裕があれば 16GBに増設しておくと安心です。ストレージについては、2TBなどにすると費用がグッと上がってしまいます。今は、クラウドストレージなどもありますし、外付けの SSDなどは安く購入できます。大容量のストレージを購入したとしても、どちらにしてもバックアップが必要になり、その分の費用も発生してしまうので、1TBにするか、または 512GBのままにして、バックアップなどと取りながら利用しても良いでしょう。</p>
+
+
+
+<h2 id="外付けディスプレイは-thunderbolt接続可能なものを">外付けディスプレイは Thunderbolt接続可能なものを</h2>
+
+
+
+<p>ノート用に外付けのディスプレイを購入する場合は、「Thunderbolt」と呼ばれる規格に対応したディスプレイを選ぶと良いでしょう。通常、ディスプレイは「HDMI」と呼ばれる一般的な映像信号用のコネクタか、ディスプレイポートと呼ばれる専用のポートを利用します。</p>
+
+
+
+<p>しかし、MacBookシリーズにはこれらの接続コネクタが搭載されておらず、USB-Cポートから変換コネクタを使って変換しなければなりません。</p>
+
+
+
+<p>しかし、Thunderboltという規格の場合は、Macに付属の USB-Cコネクタから「Thunderboldケーブル」を使ってディスプレイと接続することで、映像信号を送ることができるようになります。さらに、充電ケーブルとしての兼ねることができるため、非常にスマートに接続できます。</p>
+
+
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&amp;bc1=000000&amp;IS2=1&amp;bg1=FFFFFF&amp;fc1=000000&amp;lc1=0000FF&amp;t=tomosta-22&amp;language=ja_JP&amp;o=9&amp;p=8&amp;l=as4&amp;m=amazon&amp;f=ifr&amp;ref=as_ss_li_til&amp;asins=B085TWLMF9&amp;linkId=e1d0161f15e35dc33187b13ee4453e52"></iframe>
+
+
+
+<h2 id="キーボードは-mac対応のものを">キーボードは Mac対応のものを</h2>
+
+
+
+<p>さらに、外付けディスプレイを接続して利用する場合に、MacBookを閉じてしまってキーボードもマウスも外付けで利用することで、カンゼンにデスクトップスタイルで利用することもできます。</p>
+
+
+
+<p>この時、キーボードは「Mac対応」となっているものを選びましょう。Apple純正のMagic Keyboardや、Logicoolの MX Key for Macなどがあります。</p>
+
+
+
+<p>キーの配列が、Windowsと Macでは多少違っていて、これが違うと使いにくさの原因となってしまいます。よく確認をして選びましょう。</p>
+
+
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&amp;bc1=000000&amp;IS2=1&amp;bg1=FFFFFF&amp;fc1=000000&amp;lc1=0000FF&amp;t=tomosta-22&amp;language=ja_JP&amp;o=9&amp;p=8&amp;l=as4&amp;m=amazon&amp;f=ifr&amp;ref=as_ss_li_til&amp;asins=B08D3M4D9L&amp;linkId=cd5a4fb350d7af83b69cc38cf4618618"></iframe>
+
+
+
+<h2 id="他に買っておきたい周辺機器">他に買っておきたい周辺機器</h2>
+
+
+
+<h3 id="usbハブ">USBハブ</h3>
+
+
+
+<p>MacBookには、USB-Cのポートが 2個から 4個しか付属していません。まだまだ周辺機器には、USB Type Aと呼ばれるコネクタや SDカードも必要になるため、USBハブを利用すると良いでしょう。</p>
+
+
+
+<h3 id="外付けストレージ">外付けストレージ</h3>
+
+
+
+<p>データのバックアップなどを取ったり、前のマシンからデータを移行するときに外付けストレージがあると便利です。大きめの容量のものを購入しておくと使い勝手が良いでしょう。</p>
+
+
+
+<p>なお、外付けストレージにのみデータがあるという状態は危険なので、その場合は複数の外付けストレージにコピーをしたり、クラウドストレージなども合わせて利用しましょう。</p>
+
+
+
+<h3 id="iphone-ipadユーザーなら-apple-oneが便利">iPhone / iPadユーザーなら、Apple Oneが便利</h3>
+
+
+
+<p>Macと合わせて、iPhoneや iPadを利用しているなら「Apple One」というクラウドサービスに加入すると良いでしょう。</p>
+
+
+
+<p>音楽（Apple Music）、映画（Apple TV+）、ゲーム（Apple Arcade）の各種サブスクリプションに加えて、iCloudというクラウドストレージが 50GB付属してきて、月額 1,100円で利用できます。</p>
+
+
+
+<p>また、クラウドストレージが足りない場合は最大 4TBまで増設することができます。（2TBで 1,300円/月）</p>
+
+
+
+<h2 id="結論">結論</h2>
+
+
+
+<p>結論としては、新品で購入する場合は、M1 MacBook Pro 13インチ、64GBメモリー。または、Intel MacBook Pro 13インチを中古などで購入するのがお勧めです。</p>
+
+
+
+<p>M1 MacBook Proは、多少の使いにくさはあるものの、動作速度やバッテリーなど、補ってあまりある魅力があるため、この開発途上の感じを楽しめるなら M1 MacBook Proがおすすめと言えるでしょう。</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">1239</post-id>	</item>
+	</channel>
+</rss>
