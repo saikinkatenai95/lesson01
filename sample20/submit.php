@@ -8,7 +8,7 @@
 </head>
 <body>
   <?php if (!empty($_REQUEST['my_name'])): ?>
-  <p>お名前: <?php echo htmlspecialchars($_REQUEST['my_name'], ENT_QUOTES); ?></p>   //name属性をREQUESTのブラケットに記載してあげる
+  <p>お名前: <?php echo htmlspecialchars($_POST['my_name'], ENT_QUOTES); ?></p>   //name属性をREQUESTのブラケットに記載してあげる
   <?php endif; ?>
   
 </body>
