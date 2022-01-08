@@ -13,6 +13,6 @@ setcookie('message', 'cookieに保存した値です',
   <title>Lesson26</title>
 </head>
 <body>
-  <a href="page02.php">1ページ目へ</a>
+  <a href="page02.php">2ページ目へ</a>
 </body>
 </html>
