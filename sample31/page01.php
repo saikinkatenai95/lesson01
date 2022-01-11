@@ -1,7 +1,7 @@
 <?php
 require('intax.php');
 
-$price = 200;
+$price = 1;
 $price_tax = intax($price);
 echo $price_tax;
 
